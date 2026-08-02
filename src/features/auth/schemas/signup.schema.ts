@@ -8,6 +8,9 @@ export const signupSchema = z
     email: emailSchema,
     password: strongPasswordSchema,
     confirmPassword: z.string().min(1, 'Please confirm your password'),
+    acceptTerms: z.boolean().refine((val) => val, {
+      message: 'You must accept the Terms and Conditions and Privacy Policy',
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',

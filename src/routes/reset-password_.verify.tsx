@@ -9,7 +9,7 @@ const searchSchema = z.object({
     .catch(() => ''),
 })
 
-export const Route = createFileRoute('/(auth)/reset-password_/verify')({
+export const Route = createFileRoute('/reset-password_/verify')({
   validateSearch: searchSchema,
   beforeLoad: ({ search }) => {
     if (!search.email) throw redirect({ to: '/forgot-password' })

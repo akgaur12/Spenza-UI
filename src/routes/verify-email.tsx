@@ -9,7 +9,7 @@ const searchSchema = z.object({
     .catch(() => ''),
 })
 
-export const Route = createFileRoute('/(auth)/verify-email')({
+export const Route = createFileRoute('/verify-email')({
   validateSearch: searchSchema,
   beforeLoad: ({ search }) => {
     if (!search.email) throw redirect({ to: '/signup' })

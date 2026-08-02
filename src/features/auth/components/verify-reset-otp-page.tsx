@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { AuthCard } from '@/components/common/auth-card'
+import { AuthPageHeading, AuthPageLayout } from '@/components/common/auth-page-layout'
 import { LoadingButton } from '@/components/common/loading-button'
 import { Button } from '@/components/ui/button'
 import { OtpInput } from '@/components/forms/otp-input'
@@ -44,36 +45,40 @@ export function VerifyResetOtpPage({ email }: { email: string }) {
   }
 
   return (
-    <AuthCard title="Verify code" description={`Enter the 6-digit code we sent to ${email}.`}>
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <OtpInput value={otp} onChange={setOtp} autoFocus disabled={verifyMutation.isPending} />
-          {otpError && <p className="text-center text-sm text-destructive">{otpError}</p>}
-        </div>
+    <AuthPageLayout align="start">
+      <AuthPageHeading title="Verify code" description={`Enter the 6-digit code we sent to ${email}.`} />
 
-        <LoadingButton
-          className="w-full"
-          disabled={otp.length !== 6}
-          isLoading={verifyMutation.isPending}
-          loadingText="Verifying..."
-          onClick={handleSubmit}
-        >
-          Verify
-        </LoadingButton>
+      <AuthCard>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <OtpInput value={otp} onChange={setOtp} autoFocus disabled={verifyMutation.isPending} />
+            {otpError && <p className="text-center text-sm text-destructive">{otpError}</p>}
+          </div>
 
-        <div className="text-center text-sm text-muted-foreground">
-          Didn't get a code?{' '}
-          <Button
-            type="button"
-            variant="link"
-            className="h-auto p-0 text-sm"
-            disabled={isActive || resendMutation.isPending}
-            onClick={handleResend}
+          <LoadingButton
+            className="w-full transition-opacity duration-300"
+            disabled={otp.length !== 6}
+            isLoading={verifyMutation.isPending}
+            loadingText="Verifying..."
+            onClick={handleSubmit}
           >
-            {isActive ? `Resend in ${secondsLeft}s` : resendMutation.isPending ? 'Sending...' : 'Resend OTP'}
-          </Button>
+            Verify
+          </LoadingButton>
+
+          <div className="text-center text-sm text-muted-foreground">
+            Didn't get a code?{' '}
+            <Button
+              type="button"
+              variant="link"
+              className="h-auto p-0 text-sm"
+              disabled={isActive || resendMutation.isPending}
+              onClick={handleResend}
+            >
+              {isActive ? `Resend in ${secondsLeft}s` : resendMutation.isPending ? 'Sending...' : 'Resend OTP'}
+            </Button>
+          </div>
         </div>
-      </div>
-    </AuthCard>
+      </AuthCard>
+    </AuthPageLayout>
   )
 }
