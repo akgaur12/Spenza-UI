@@ -1,10 +1,8 @@
+import { Link } from '@tanstack/react-router'
 import { Logo } from '@/components/common/logo'
+import { SITE_LINKS } from '@/config'
 
-const LINKS = [
-  { label: 'GitHub', href: 'https://github.com' },
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms and Conditions', href: '#' },
-]
+const LINK_CLASSES = 'text-sm text-muted-foreground hover:text-foreground'
 
 export function Footer() {
   return (
@@ -16,13 +14,26 @@ export function Footer() {
         </div>
 
         <ul className="flex items-center gap-6">
-          {LINKS.map((link) => (
-            <li key={link.label}>
-              <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
-                {link.label}
-              </a>
-            </li>
-          ))}
+          <li>
+            <a href={SITE_LINKS.github} className={LINK_CLASSES}>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href={SITE_LINKS.medium} className={LINK_CLASSES}>
+              Medium
+            </a>
+          </li>
+          <li>
+            <Link to="/privacy" className={LINK_CLASSES}>
+              Privacy Policy
+            </Link>
+          </li>
+          <li>
+            <Link to="/terms" className={LINK_CLASSES}>
+              Terms and Conditions
+            </Link>
+          </li>
         </ul>
       </div>
     </footer>

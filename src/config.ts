@@ -59,3 +59,11 @@ export const API_ENDPOINTS = {
     detail: (expenseId: string) => `/api/v1/expenses/${expenseId}`,
   },
 } as const
+
+/** External links and contact addresses used across the site (footer, legal pages, etc). */
+export const SITE_LINKS = {
+  github: 'https://github.com/akgaur12',
+  medium: 'https://medium.com/@ak_gaur',
+  privacyEmail: 'privacy@spenza.app',
+  legalEmail: 'legal@spenza.app',
+} as const
