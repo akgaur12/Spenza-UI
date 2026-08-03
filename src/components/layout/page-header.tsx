@@ -7,7 +7,7 @@ export function PageHeader() {
   const title = activeItem?.title ?? 'Spenza'
 
   return (
-    <div className="flex min-w-0 flex-col justify-center">
+    <div className="hidden min-w-0 flex-col justify-center md:flex">
       <h1 className="truncate text-base font-semibold leading-none">{title}</h1>
       <p className="mt-1 truncate text-xs text-muted-foreground">Home / {title}</p>
     </div>

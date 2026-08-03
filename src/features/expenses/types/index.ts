@@ -23,7 +23,7 @@ export interface ExpenseListResponse {
 }
 
 export interface ExpenseListParams {
-  category_id?: string
+  category_id?: string[]
   start_date?: string
   end_date?: string
   min_amount?: number
@@ -31,4 +31,30 @@ export interface ExpenseListParams {
   search?: string
   page?: number
   page_size?: number
+}
+
+export type ExpenseInfiniteParams = Omit<ExpenseListParams, 'page'>
+
+export interface ExpenseCreateRequest {
+  category_id: string
+  description: string
+  amount: string
+  spent_at: string
+}
+
+export interface ExpenseUpdateRequest {
+  category_id?: string
+  description?: string
+  amount?: string
+  spent_at?: string
+}
+
+export type ExpenseSortOption = 'newest' | 'oldest' | 'highest' | 'lowest'
+
+export type ExpenseDateRangePreset = 'today' | 'week' | 'month' | 'year' | 'custom'
+
+export interface ExpenseDateRange {
+  preset: ExpenseDateRangePreset
+  startDate?: string
+  endDate?: string
 }

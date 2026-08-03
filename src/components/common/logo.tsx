@@ -22,11 +22,19 @@ function LogoMark({ className }: { className?: string }) {
   )
 }
 
-export function Logo({ className, iconOnly }: { className?: string; iconOnly?: boolean }) {
+export function Logo({
+  className,
+  iconOnly,
+  size = 'default',
+}: {
+  className?: string
+  iconOnly?: boolean
+  size?: 'default' | 'sm'
+}) {
   return (
     <Link to="/" className={cn('flex items-center gap-2 font-semibold tracking-tight', className)}>
-      <LogoMark className="size-8 shrink-0" />
-      {!iconOnly && <span className="text-lg">Spenza</span>}
+      <LogoMark className={cn('shrink-0', size === 'sm' ? 'size-6' : 'size-8')} />
+      {!iconOnly && <span className={size === 'sm' ? 'text-base' : 'text-lg'}>Spenza</span>}
     </Link>
   )
 }

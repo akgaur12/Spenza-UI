@@ -1,5 +1,6 @@
 import { Bell, Menu } from 'lucide-react'
 import { toast } from 'sonner'
+import { Logo } from '@/components/common/logo'
 import { ThemeToggle } from '@/components/common/theme-toggle'
 import { PageHeader } from '@/components/layout/page-header'
 import { UserMenu } from '@/components/layout/user-menu'
@@ -22,6 +23,7 @@ export function Topbar({ onOpenDrawer }: TopbarProps) {
         <Menu className="size-5" />
       </Button>
 
+      <Logo className="md:hidden" size="sm" />
       <PageHeader />
 
       <div className="ml-auto flex items-center gap-1">

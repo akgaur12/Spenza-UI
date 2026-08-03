@@ -19,3 +19,11 @@ export function formatExpenseDate(isoDateTime: string): string {
   if (isYesterday(date)) return 'Yesterday'
   return format(date, isThisYear(date) ? 'd MMM' : 'd MMM yyyy')
 }
+
+/** "Today (Mon)" / "Yesterday (Sun)" / "Wed, 01 Jan 2025" — used as the timeline's date-group heading. */
+export function formatExpenseGroupHeading(isoDateTime: string): string {
+  const date = new Date(isoDateTime)
+  if (isToday(date)) return `Today (${format(date, 'EEE')})`
+  if (isYesterday(date)) return `Yesterday (${format(date, 'EEE')})`
+  return format(date, 'EEE, dd MMM yyyy')
+}

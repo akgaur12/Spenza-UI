@@ -1,11 +1,13 @@
 import { Plus } from 'lucide-react'
-import { toast } from 'sonner'
 import { MobileNavigationItem } from '@/components/layout/mobile-navigation-item'
 import { NAV_ITEMS } from '@/config/navigation'
+import { useAddExpenseModal } from '@/features/expenses/components/add-expense-provider'
 
 const [overview, expenses, analytics, profile] = NAV_ITEMS
 
 export function MobileBottomNavigation() {
+  const { openAddExpenseModal } = useAddExpenseModal()
+
   return (
     <nav
       aria-label="Primary"
@@ -18,7 +20,7 @@ export function MobileBottomNavigation() {
         <button
           type="button"
           aria-label="Add expense"
-          onClick={() => toast('Add expense is coming soon')}
+          onClick={openAddExpenseModal}
           className="-mt-6 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform active:scale-95"
         >
           <Plus className="size-7" />
