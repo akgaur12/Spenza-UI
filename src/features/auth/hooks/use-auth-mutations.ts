@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import {
   changePassword,
@@ -12,7 +13,7 @@ import {
   verifyResetOtp,
   verifySignupOtp,
 } from '@/features/auth/api/auth.api'
-import { getErrorMessage } from '@/lib/errors'
+import { getErrorCode, getErrorMessage } from '@/lib/errors'
 import { authKeys } from './query-keys'
 
 export function useSignupMutation() {
@@ -96,12 +97,20 @@ export function useLogoutAllDevicesMutation() {
 }
 
 export function useForgotPasswordMutation() {
+  const navigate = useNavigate()
   return useMutation({
     mutationFn: forgotPassword,
     onSuccess: () => {
-      toast.success('OTP sent', { description: 'If an account exists for that email, a code is on its way.' })
+      toast.success('OTP sent', { description: 'Check your email for the password reset code.' })
     },
     onError: (error) => {
+      if (getErrorCode(error) === 'USER_NOT_FOUND') {
+        toast.error("Account doesn't exist", {
+          description: 'No account is registered with that email.',
+          action: { label: 'Create account', onClick: () => navigate({ to: '/signup' }) },
+        })
+        return
+      }
       toast.error('Something went wrong', { description: getErrorMessage(error) })
     },
   })

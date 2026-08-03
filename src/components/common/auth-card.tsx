@@ -10,7 +10,7 @@ interface AuthCardProps {
 
 export function AuthCard({ title, description, children, footer }: AuthCardProps) {
   return (
-    <Card className="w-full max-w-md border-border/60 shadow-sm">
+    <Card className="w-full max-w-[26rem] border-border/60 shadow-sm">
       {title && (
         <CardHeader>
           <CardTitle className="text-2xl font-semibold tracking-tight">{title}</CardTitle>
