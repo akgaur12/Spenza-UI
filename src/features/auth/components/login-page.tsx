@@ -24,7 +24,7 @@ export function LoginPage() {
   function onSubmit(values: LoginFormValues) {
     loginMutation.mutate(
       { identifier: values.identifier, password: values.password },
-      { onSuccess: () => navigate({ to: '/dashboard' }) },
+      { onSuccess: () => navigate({ to: '/overview' }) },
     )
   }
 

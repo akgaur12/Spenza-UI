@@ -1,0 +1,57 @@
+import { Link, useNavigate } from '@tanstack/react-router'
+import { LogOut, Settings, User } from 'lucide-react'
+import { toast } from 'sonner'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ProfileAvatar } from '@/components/layout/profile-avatar'
+import { useAuth } from '@/features/auth/components/auth-provider'
+import { useLogoutMutation } from '@/features/auth/hooks/use-auth-mutations'
+
+export function UserMenu() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const logoutMutation = useLogoutMutation()
+
+  function handleLogout() {
+    logoutMutation.mutate(undefined, { onSuccess: () => navigate({ to: '/login' }) })
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          aria-label="Open profile menu"
+          className="rounded-full transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+        >
+          <ProfileAvatar user={user} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="truncate">{user?.full_name || user?.username}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/profile">
+            <User />
+            Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => toast('Settings are coming soon')}>
+          <Settings />
+          Settings
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive" disabled={logoutMutation.isPending} onSelect={handleLogout}>
+          <LogOut />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}

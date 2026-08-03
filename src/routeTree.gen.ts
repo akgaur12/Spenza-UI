@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -18,6 +18,10 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
+import { Route as AppOverviewRouteImport } from './routes/_app/overview'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as ResetPasswordVerifyRouteImport } from './routes/reset-password_.verify'
 
 const IndexRoute = IndexRouteImport.update({
@@ -25,9 +29,8 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -65,6 +68,26 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
   path: '/verify-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExpensesRoute = AppExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOverviewRoute = AppOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
 const ResetPasswordVerifyRoute = ResetPasswordVerifyRouteImport.update({
   id: '/reset-password_/verify',
   path: '/reset-password/verify',
@@ -73,7 +96,6 @@ const ResetPasswordVerifyRoute = ResetPasswordVerifyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -81,11 +103,14 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/expenses': typeof AppExpensesRoute
+  '/overview': typeof AppOverviewRoute
+  '/profile': typeof AppProfileRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -93,12 +118,16 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/expenses': typeof AppExpensesRoute
+  '/overview': typeof AppOverviewRoute
+  '/profile': typeof AppProfileRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/_app': typeof AppRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
@@ -106,13 +135,16 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/expenses': typeof AppExpensesRoute
+  '/_app/overview': typeof AppOverviewRoute
+  '/_app/profile': typeof AppProfileRoute
   '/reset-password_/verify': typeof ResetPasswordVerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/forgot-password'
     | '/login'
     | '/privacy'
@@ -120,11 +152,14 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/analytics'
+    | '/expenses'
+    | '/overview'
+    | '/profile'
     | '/reset-password/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
     | '/forgot-password'
     | '/login'
     | '/privacy'
@@ -132,11 +167,15 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/analytics'
+    | '/expenses'
+    | '/overview'
+    | '/profile'
     | '/reset-password/verify'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
+    | '/_app'
     | '/forgot-password'
     | '/login'
     | '/privacy'
@@ -144,12 +183,16 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/_app/analytics'
+    | '/_app/expenses'
+    | '/_app/overview'
+    | '/_app/profile'
     | '/reset-password_/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  AppRoute: typeof AppRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -169,11 +212,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -225,6 +268,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/expenses': {
+      id: '/_app/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof AppExpensesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/overview': {
+      id: '/_app/overview'
+      path: '/overview'
+      fullPath: '/overview'
+      preLoaderRoute: typeof AppOverviewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/reset-password_/verify': {
       id: '/reset-password_/verify'
       path: '/reset-password/verify'
@@ -235,9 +306,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppExpensesRoute: typeof AppExpensesRoute
+  AppOverviewRoute: typeof AppOverviewRoute
+  AppProfileRoute: typeof AppProfileRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppExpensesRoute: AppExpensesRoute,
+  AppOverviewRoute: AppOverviewRoute,
+  AppProfileRoute: AppProfileRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  AppRoute: AppRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,

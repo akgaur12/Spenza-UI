@@ -23,7 +23,7 @@ export function Navbar() {
             <Skeleton className="h-9 w-24 rounded-md" />
           ) : isAuthenticated ? (
             <Button asChild>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/overview">Overview</Link>
             </Button>
           ) : (
             <>
@@ -61,7 +61,7 @@ export function Navbar() {
           <div className="flex flex-col gap-2 px-6 pb-4">
             {isAuthenticated ? (
               <Button asChild>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/overview">Overview</Link>
               </Button>
             ) : (
               <>
