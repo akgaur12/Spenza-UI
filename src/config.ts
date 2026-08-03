@@ -11,13 +11,13 @@ export const env = {
  * Every backend route path, in one place, grouped by module.
  *
  * The `auth`/`user`/`admin` groups are unversioned (`/api/users`, `/api/admin/users`)
- * while `categories`/`expenses` are versioned (`/api/v1/...`) — this split is
- * intentional and matches the backend's own routing (verified against
- * src/app.py and the module routers in the Spenza backend, not assumed).
+ * while `categories`/`expenses`/`dashboard`/`analytics` are versioned (`/api/v1/...`)
+ * — this split is intentional and matches the backend's own routing (verified
+ * against src/app.py and the module routers in the Spenza backend, not assumed).
  *
- * `dashboard`/`analytics`/`import-export` are deliberately omitted: their
- * route contracts haven't been verified against the backend yet. Add them
- * here — and only here — once confirmed, rather than guessing paths.
+ * `import-export` is deliberately omitted: its route contracts haven't been
+ * verified against the backend yet. Add it here — and only here — once
+ * confirmed, rather than guessing paths.
  */
 export const API_ENDPOINTS = {
   auth: {
@@ -57,6 +57,13 @@ export const API_ENDPOINTS = {
   expenses: {
     list: '/api/v1/expenses',
     detail: (expenseId: string) => `/api/v1/expenses/${expenseId}`,
+  },
+  dashboard: {
+    summary: '/api/v1/dashboard/summary',
+  },
+  analytics: {
+    trends: '/api/v1/analytics/trends',
+    categories: '/api/v1/analytics/categories',
   },
 } as const
 
