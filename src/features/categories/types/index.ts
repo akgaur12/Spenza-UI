@@ -27,3 +27,14 @@ export interface CategoryResponse {
   created_at: string
   updated_at: string
 }
+
+export interface CategoryUpdateRequest {
+  name?: string
+  icon?: string | null
+}
+
+/** A category merged with its all-time expense count/total, computed client-side from analytics data. */
+export interface CategoryWithStats extends CategoryListItem {
+  expense_count: number
+  total: string
+}

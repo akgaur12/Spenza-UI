@@ -4,6 +4,7 @@ import type {
   CategoryListParams,
   CategoryListResponse,
   CategoryResponse,
+  CategoryUpdateRequest,
 } from '@/features/categories/types'
 import { apiClient } from '@/services/api-client'
 import type { ApiSuccessResponse } from '@/types/api'
@@ -18,4 +19,16 @@ export async function listCategories(params: CategoryListParams = {}): Promise<C
 export async function createCategory(payload: CategoryCreateRequest): Promise<CategoryResponse> {
   const { data } = await apiClient.post<ApiSuccessResponse<CategoryResponse>>(API_ENDPOINTS.categories.list, payload)
   return data.data
+}
+
+export async function updateCategory(categoryId: string, payload: CategoryUpdateRequest): Promise<CategoryResponse> {
+  const { data } = await apiClient.patch<ApiSuccessResponse<CategoryResponse>>(
+    API_ENDPOINTS.categories.detail(categoryId),
+    payload,
+  )
+  return data.data
+}
+
+export async function deleteCategory(categoryId: string): Promise<void> {
+  await apiClient.delete(API_ENDPOINTS.categories.detail(categoryId))
 }

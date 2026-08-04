@@ -41,6 +41,9 @@ export type ApiErrorCode =
   | 'TOO_MANY_REQUESTS'
   | 'HTTP_ERROR'
   | 'INTERNAL_ERROR'
+  | 'CATEGORY_ALREADY_EXISTS'
+  | 'CATEGORY_NOT_FOUND'
+  | 'SYSTEM_CATEGORY_READ_ONLY'
 
 /** Thrown by the axios response interceptor for every non-2xx response. */
 export class ApiError extends Error {

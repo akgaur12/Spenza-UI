@@ -1,5 +1,5 @@
 import { Link, useNavigate } from '@tanstack/react-router'
-import { LogOut, Settings } from 'lucide-react'
+import { LogOut, Settings, Tags } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +35,12 @@ export function UserMenu() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="truncate">{user?.full_name || user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/categories">
+            <Tags />
+            Categories
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/settings">
             <Settings />
