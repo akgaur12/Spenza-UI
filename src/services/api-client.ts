@@ -52,8 +52,17 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config as RetriableConfig | undefined
     const url = originalRequest?.url ?? ''
     const isExempt = AUTH_EXEMPT_PATHS.some((path) => url.includes(path))
+    /**
+     * The backend also returns plain 401s for reasons unrelated to token expiry — e.g.
+     * a wrong "confirm your password" on change-password/delete-account is `401
+     * INVALID_CREDENTIALS`. Only `INVALID_ACCESS_TOKEN` means the access token itself
+     * is the problem; anything else must be surfaced as a normal error, not treated as
+     * a dead session (a wrong-password retry would just fail again with the same code,
+     * and that second failure was being caught and misread as "session expired").
+     */
+    const isExpiredToken = error.response.data?.error_code === 'INVALID_ACCESS_TOKEN'
 
-    if (error.response.status === 401 && !isExempt && originalRequest && !originalRequest._retry) {
+    if (isExpiredToken && !isExempt && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true
       try {
         await refreshAccessToken()

@@ -3,7 +3,7 @@ import { MobileNavigationItem } from '@/components/layout/mobile-navigation-item
 import { NAV_ITEMS } from '@/config/navigation'
 import { useAddExpenseModal } from '@/features/expenses/components/add-expense-provider'
 
-const [overview, expenses, analytics, profile] = NAV_ITEMS
+const [overview, expenses, analytics, settings] = NAV_ITEMS
 
 export function MobileBottomNavigation() {
   const { openAddExpenseModal } = useAddExpenseModal()
@@ -28,7 +28,7 @@ export function MobileBottomNavigation() {
       </div>
 
       <MobileNavigationItem title={analytics.title} href={analytics.href} icon={analytics.icon} />
-      <MobileNavigationItem title={profile.title} href={profile.href} icon={profile.icon} />
+      <MobileNavigationItem title={settings.title} href={settings.href} icon={settings.icon} />
     </nav>
   )
 }

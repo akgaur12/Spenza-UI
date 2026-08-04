@@ -1,6 +1,5 @@
 import { Link, useNavigate } from '@tanstack/react-router'
-import { LogOut, Settings, User } from 'lucide-react'
-import { toast } from 'sonner'
+import { LogOut, Settings } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,14 +36,10 @@ export function UserMenu() {
         <DropdownMenuLabel className="truncate">{user?.full_name || user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/profile">
-            <User />
-            Profile
+          <Link to="/settings">
+            <Settings />
+            Settings
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => toast('Settings are coming soon')}>
-          <Settings />
-          Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" disabled={logoutMutation.isPending} onSelect={handleLogout}>
