@@ -4,6 +4,7 @@ import { EmptyExpenseState } from '@/features/expenses/components/empty-expense-
 import { ExpenseCard } from '@/features/expenses/components/expense-card'
 import { ExpenseDateGroup } from '@/features/expenses/components/expense-date-group'
 import { ExpenseSkeleton } from '@/features/expenses/components/expense-skeleton'
+import { ExpenseTable } from '@/features/expenses/components/expense-table'
 import { LoadingMoreIndicator } from '@/features/expenses/components/loading-more-indicator'
 import { NoResultsState } from '@/features/expenses/components/no-results-state'
 import { useInfiniteExpenses } from '@/features/expenses/hooks/use-infinite-expenses'
@@ -63,17 +64,23 @@ export function ExpenseTimeline({
 
   return (
     <div className={cn('space-y-6 transition-opacity', query.isPlaceholderData && 'opacity-60')}>
-      {groupByDate ? (
-        groupExpensesByDate(sorted).map((group) => (
-          <ExpenseDateGroup key={group.dateKey} group={group} onEdit={onEdit} onDelete={onDelete} />
-        ))
-      ) : (
-        <div className="flex flex-col gap-2 px-4 sm:gap-0 sm:divide-y sm:divide-border sm:px-0">
-          {sorted.map((expense) => (
-            <ExpenseCard key={expense.id} expense={expense} showDate onEdit={onEdit} onDelete={onDelete} />
-          ))}
-        </div>
-      )}
+      <div className="hidden rounded-lg border sm:block">
+        <ExpenseTable expenses={sorted} onEdit={onEdit} onDelete={onDelete} />
+      </div>
+
+      <div className="sm:hidden">
+        {groupByDate ? (
+          groupExpensesByDate(sorted).map((group) => (
+            <ExpenseDateGroup key={group.dateKey} group={group} onEdit={onEdit} onDelete={onDelete} />
+          ))
+        ) : (
+          <div className="flex flex-col gap-2 px-4">
+            {sorted.map((expense) => (
+              <ExpenseCard key={expense.id} expense={expense} showDate onEdit={onEdit} onDelete={onDelete} />
+            ))}
+          </div>
+        )}
+      </div>
 
       <div ref={sentinelRef} aria-hidden />
       {query.isFetchingNextPage && <LoadingMoreIndicator />}

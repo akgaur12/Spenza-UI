@@ -27,3 +27,13 @@ export function formatExpenseGroupHeading(isoDateTime: string): string {
   if (isYesterday(date)) return `Yesterday (${format(date, 'EEE')})`
   return format(date, 'EEE, dd MMM yyyy')
 }
+
+/** "03 Aug 2026" — explicit calendar date for the table's Date column. */
+export function formatExpenseTableDate(isoDateTime: string): string {
+  return format(new Date(isoDateTime), 'dd MMM yyyy')
+}
+
+/** "Mon" — day-of-week for the table's Day column. */
+export function formatExpenseDay(isoDateTime: string): string {
+  return format(new Date(isoDateTime), 'EEE')
+}

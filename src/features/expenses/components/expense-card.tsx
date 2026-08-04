@@ -14,7 +14,7 @@ interface ExpenseCardProps {
 
 export function ExpenseCard({ expense, showDate, onEdit, onDelete }: ExpenseCardProps) {
   return (
-    <div className="group flex items-center gap-3 rounded-lg border border-border/70 bg-card p-3 shadow-sm sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:py-3 sm:shadow-none sm:hover:bg-accent/40">
+    <div className="group flex items-center gap-3 rounded-lg border border-border/70 bg-card p-3 shadow-sm">
       <span
         className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-lg"
         aria-hidden

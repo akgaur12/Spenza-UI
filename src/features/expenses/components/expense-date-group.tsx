@@ -12,11 +12,11 @@ interface ExpenseDateGroupProps {
 export function ExpenseDateGroup({ group, onEdit, onDelete }: ExpenseDateGroupProps) {
   return (
     <div>
-      <div className="flex items-baseline justify-between px-4 py-2 text-sm sm:px-0">
+      <div className="flex items-baseline justify-between px-4 py-2 text-sm">
         <span className="font-semibold">{group.heading}</span>
         <span className="text-muted-foreground">{formatCurrency(group.total)}</span>
       </div>
-      <div className="flex flex-col gap-2 px-4 sm:gap-0 sm:divide-y sm:divide-border sm:px-0">
+      <div className="flex flex-col gap-2 px-4">
         {group.items.map((expense) => (
           <ExpenseCard key={expense.id} expense={expense} onEdit={onEdit} onDelete={onDelete} />
         ))}
