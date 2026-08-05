@@ -5,6 +5,8 @@ export const env = {
   appEnv: import.meta.env.VITE_APP_ENV,
   isDev: import.meta.env.DEV,
   isProd: import.meta.env.PROD,
+  analyticsYearFilterCount: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_COUNT) || 6,
+  analyticsYearFilterMinYear: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_MIN_YEAR) || 2000,
 } as const
 
 /**
@@ -64,6 +66,7 @@ export const API_ENDPOINTS = {
   analytics: {
     trends: '/api/v1/analytics/trends',
     categories: '/api/v1/analytics/categories',
+    calendarHeatmap: '/api/v1/analytics/calendar-heatmap',
   },
 } as const
 

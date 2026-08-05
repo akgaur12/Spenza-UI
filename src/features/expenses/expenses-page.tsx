@@ -1,3 +1,4 @@
+import { getRouteApi } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useAddExpenseModal } from '@/features/expenses/components/add-expense-provider'
 import { DeleteExpenseDialog } from '@/features/expenses/components/delete-expense-dialog'
@@ -9,8 +10,15 @@ import { ExpenseTimeline } from '@/features/expenses/components/expense-timeline
 import { useExpenseFilters } from '@/features/expenses/hooks/use-expense-filters'
 import type { Expense } from '@/features/expenses/types'
 
+const routeApi = getRouteApi('/_app/expenses')
+
 export function ExpensesPage() {
-  const filters = useExpenseFilters()
+  const search = routeApi.useSearch()
+  const filters = useExpenseFilters({
+    categoryId: search.category_id,
+    startDate: search.start_date,
+    endDate: search.end_date,
+  })
   const { openAddExpenseModal } = useAddExpenseModal()
   const [editTarget, setEditTarget] = useState<Expense | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Expense | null>(null)

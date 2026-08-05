@@ -1,5 +1,7 @@
 import { API_ENDPOINTS } from '@/config'
 import type {
+  CalendarHeatmapParams,
+  CalendarHeatmapResponse,
   CategoryAnalyticsParams,
   CategoryAnalyticsResponse,
   TrendAnalyticsParams,
@@ -20,6 +22,14 @@ export async function getCategoryAnalytics(
 ): Promise<CategoryAnalyticsResponse> {
   const { data } = await apiClient.get<ApiSuccessResponse<CategoryAnalyticsResponse>>(
     API_ENDPOINTS.analytics.categories,
+    { params },
+  )
+  return data.data
+}
+
+export async function getCalendarHeatmap(params: CalendarHeatmapParams = {}): Promise<CalendarHeatmapResponse> {
+  const { data } = await apiClient.get<ApiSuccessResponse<CalendarHeatmapResponse>>(
+    API_ENDPOINTS.analytics.calendarHeatmap,
     { params },
   )
   return data.data
