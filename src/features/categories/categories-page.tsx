@@ -1,3 +1,4 @@
+import { getRouteApi } from '@tanstack/react-router'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { SectionError } from '@/components/common/section-error'
@@ -14,11 +15,14 @@ import { useCategoriesWithStats } from '@/features/categories/hooks/use-categori
 import type { CategoryWithStats } from '@/features/categories/types'
 import { useDebounce } from '@/hooks/use-debounce'
 
+const routeApi = getRouteApi('/_app/categories')
+
 export function CategoriesPage() {
+  const { create } = routeApi.useSearch()
   const [search, setSearch] = useState('')
   const [searchResetKey, setSearchResetKey] = useState(0)
   const [filter, setFilter] = useState<CategoryFilterValue>('all')
-  const [modalTarget, setModalTarget] = useState<CategoryWithStats | 'create' | null>(null)
+  const [modalTarget, setModalTarget] = useState<CategoryWithStats | 'create' | null>(create ? 'create' : null)
   const [deleteTarget, setDeleteTarget] = useState<CategoryWithStats | null>(null)
   const debouncedSearch = useDebounce(search, 350)
 

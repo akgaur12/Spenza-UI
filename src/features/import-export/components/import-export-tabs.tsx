@@ -1,3 +1,4 @@
+import { getRouteApi } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ExportPanel } from '@/features/import-export/components/export-panel'
@@ -5,8 +6,11 @@ import { ImportWizard } from '@/features/import-export/components/import-wizard'
 
 type ImportExportTab = 'import' | 'export'
 
+const routeApi = getRouteApi('/_app/import-export')
+
 export function ImportExportTabs() {
-  const [activeTab, setActiveTab] = useState<ImportExportTab>('import')
+  const { tab } = routeApi.useSearch()
+  const [activeTab, setActiveTab] = useState<ImportExportTab>(tab ?? 'import')
 
   return (
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as ImportExportTab)}>

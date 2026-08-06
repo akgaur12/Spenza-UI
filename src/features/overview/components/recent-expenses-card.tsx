@@ -46,33 +46,13 @@ export function RecentExpensesCard() {
                   <span className="text-xs text-muted-foreground">{formatExpenseDate(expense.spent_at)}</span>
                 </div>
 
-                {/* Tablet and up: actions reveal on row hover */}
-                <div className="hidden shrink-0 items-center gap-1 sm:group-hover:flex">
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={`Edit ${expense.description}`}
-                    onClick={() => toast('Editing expenses is coming soon')}
-                  >
-                    <Pencil className="size-3.5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={`Delete ${expense.description}`}
-                    onClick={() => toast('Deleting expenses is coming soon')}
-                  >
-                    <Trash2 className="size-3.5" />
-                  </Button>
-                </div>
-
-                {/* Mobile: no hover, so actions sit behind a persistent menu button */}
+                {/* Actions sit behind a persistent menu button on all breakpoints */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon-sm"
-                      className="shrink-0 sm:hidden"
+                      className="shrink-0"
                       aria-label={`Actions for ${expense.description}`}
                     >
                       <MoreVertical className="size-4" />

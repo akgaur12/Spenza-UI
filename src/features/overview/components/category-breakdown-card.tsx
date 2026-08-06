@@ -5,6 +5,7 @@ import { SectionError } from '@/components/common/section-error'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useCategoryAnalytics } from '@/features/analytics/hooks/use-category-analytics'
+import { CategoryIcon } from '@/features/categories/components/category-icon'
 import { CategorySkeleton } from '@/features/overview/components/category-skeleton'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { formatCurrency } from '@/lib/format'
@@ -76,9 +77,7 @@ export function CategoryBreakdownCard() {
                   )}
                 >
                   <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: category.color }} aria-hidden />
-                  <span className="text-lg" aria-hidden>
-                    {category.icon}
-                  </span>
+                  <CategoryIcon icon={category.icon} className="text-lg" />
                   <span className="min-w-0 flex-1 truncate text-sm font-medium">{category.name}</span>
                   <span className="text-sm font-semibold tabular-nums">{formatCurrency(category.total)}</span>
                   <span className="w-10 shrink-0 text-right text-xs text-muted-foreground">

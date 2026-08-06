@@ -1,6 +1,5 @@
 import { CalendarDays, CalendarRange, Minus, Receipt, TrendingDown, TrendingUp, Wallet } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { toast } from 'sonner'
 import { SectionError } from '@/components/common/section-error'
 import { useDashboardSummary } from '@/features/dashboard/hooks/use-dashboard-summary'
 import type { MonthTrend } from '@/features/dashboard/types'
@@ -17,10 +16,6 @@ const MONTH_TREND_ICON: Record<MonthTrend, LucideIcon> = {
 
 function expenseCountLabel(count: number): string {
   return `${count} ${count === 1 ? 'expense' : 'expenses'}`
-}
-
-function handlePlaceholderClick(period: string) {
-  toast(`Filtering by ${period} is coming soon`)
 }
 
 export function SummaryCards() {
@@ -46,7 +41,6 @@ export function SummaryCards() {
     amount: formatCurrency(this_month.total),
     meta: expenseCountLabel(this_month.expense_count),
     trend: monthTrendLabel ? { direction: month_comparison.trend, label: monthTrendLabel } : undefined,
-    onClick: () => handlePlaceholderClick('this month'),
   }
 
   const todayCard = {
@@ -55,7 +49,6 @@ export function SummaryCards() {
     icon: Wallet,
     amount: formatCurrency(today.total),
     meta: expenseCountLabel(today.expense_count),
-    onClick: () => handlePlaceholderClick('today'),
   }
   const weekCard = {
     id: 'week',
@@ -63,7 +56,6 @@ export function SummaryCards() {
     icon: CalendarDays,
     amount: formatCurrency(this_week.total),
     meta: expenseCountLabel(this_week.expense_count),
-    onClick: () => handlePlaceholderClick('this week'),
   }
   const yearCard = {
     id: 'year',
@@ -71,7 +63,6 @@ export function SummaryCards() {
     icon: CalendarRange,
     amount: formatCurrency(this_year.total),
     meta: expenseCountLabel(this_year.expense_count),
-    onClick: () => handlePlaceholderClick('this year'),
   }
   const avgDailyCard = {
     id: 'avg-daily',

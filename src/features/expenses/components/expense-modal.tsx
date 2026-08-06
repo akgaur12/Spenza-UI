@@ -116,39 +116,31 @@ export function ExpenseModal({ open, onOpenChange, expense }: ExpenseModalProps)
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <FormField
               control={form.control}
-              name="amount"
+              name="spentAt"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xl font-semibold text-muted-foreground">
-                        ₹
-                      </span>
-                      <Input
-                        {...field}
-                        type="text"
-                        inputMode="decimal"
-                        placeholder="0.00"
-                        autoFocus
-                        className="h-14 pl-8 text-2xl font-bold tabular-nums"
+                  <FormLabel>Date</FormLabel>
+                  <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button type="button" variant="outline" className="w-full justify-start font-normal" autoFocus>
+                          <CalendarIcon className="size-4 text-muted-foreground" />
+                          {isToday(field.value) ? 'Today' : format(field.value, 'EEE, d MMM yyyy')}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(date) => {
+                          if (date) field.onChange(date)
+                          setDatePickerOpen(false)
+                        }}
+                        disabled={{ after: new Date() }}
                       />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Cake, Uber, Coffee…" {...field} />
-                  </FormControl>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
@@ -185,31 +177,38 @@ export function ExpenseModal({ open, onOpenChange, expense }: ExpenseModalProps)
 
             <FormField
               control={form.control}
-              name="spentAt"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button type="button" variant="outline" className="w-full justify-start font-normal">
-                          <CalendarIcon className="size-4 text-muted-foreground" />
-                          {isToday(field.value) ? 'Today' : format(field.value, 'EEE, d MMM yyyy')}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          if (date) field.onChange(date)
-                          setDatePickerOpen(false)
-                        }}
-                        disabled={{ after: new Date() }}
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cake, Uber, Coffee…" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xl font-semibold text-muted-foreground">
+                        ₹
+                      </span>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="0.00"
+                        className="h-14 pl-8 text-2xl font-bold tabular-nums"
                       />
-                    </PopoverContent>
-                  </Popover>
+                    </div>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
