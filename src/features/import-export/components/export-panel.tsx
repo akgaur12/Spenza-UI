@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { SectionError } from '@/components/common/section-error'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useCategories } from '@/features/categories/hooks/use-categories'
 import { EmptyExportState } from '@/features/import-export/components/empty-export-state'
 import { ExportFilters } from '@/features/import-export/components/export-filters'
 import { ExportSummary } from '@/features/import-export/components/export-summary'
@@ -24,12 +25,13 @@ export function ExportPanel() {
     preset: 'month',
     ...resolveExportDateRangePreset('month'),
   }))
-  const [categoryId, setCategoryId] = useState<string | null>(null)
+  const [categoryIds, setCategoryIds] = useState<string[]>([])
+  const categoriesQuery = useCategories()
 
   const filteredExpensesQuery = useExpenses({
     start_date: dateRange.startDate,
     end_date: dateRange.endDate,
-    category_id: categoryId ? [categoryId] : undefined,
+    category_id: categoryIds.length > 0 ? categoryIds : undefined,
     page_size: 1,
   })
 
@@ -49,7 +51,7 @@ export function ExportPanel() {
       format,
       start_date: dateRange.startDate,
       end_date: dateRange.endDate,
-      category_id: categoryId ?? undefined,
+      category_id: categoryIds.length > 0 ? categoryIds : undefined,
     })
   }
 
@@ -63,8 +65,8 @@ export function ExportPanel() {
           <ExportFilters
             dateRange={dateRange}
             onDateRangeChange={setDateRange}
-            categoryId={categoryId}
-            onCategoryChange={setCategoryId}
+            categoryIds={categoryIds}
+            onCategoryChange={setCategoryIds}
           />
 
           <div className="flex items-center gap-2">
@@ -89,7 +91,14 @@ export function ExportPanel() {
           <CardTitle className="text-base">Export Summary</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <ExportSummary count={count} isLoading={filteredExpensesQuery.isPending} dateRange={dateRange} format={format} />
+          <ExportSummary
+            count={count}
+            isLoading={filteredExpensesQuery.isPending}
+            dateRange={dateRange}
+            format={format}
+            categoryIds={categoryIds}
+            categories={categoriesQuery.data?.items ?? []}
+          />
           {!filteredExpensesQuery.isPending && !canExport && (
             <p className="text-sm text-muted-foreground">No expenses match these filters.</p>
           )}

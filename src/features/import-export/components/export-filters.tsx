@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useCategories } from '@/features/categories/hooks/use-categories'
-import { CategoryCombobox } from '@/features/expenses/components/category-combobox'
+import { CategoryMultiCombobox } from '@/features/expenses/components/category-multi-combobox'
 import type { ExportDateRange, ExportDateRangePreset } from '@/features/import-export/types'
 import { EXPORT_DATE_RANGE_LABELS, resolveExportDateRangePreset } from '@/features/import-export/utils/export-date-range'
 import { useDebounce } from '@/hooks/use-debounce'
@@ -106,11 +106,11 @@ function CustomRangeFilter({ dateRange, onSelect }: CustomRangeFilterProps) {
 interface ExportFiltersProps {
   dateRange: ExportDateRange
   onDateRangeChange: (range: ExportDateRange) => void
-  categoryId: string | null
-  onCategoryChange: (categoryId: string | null) => void
+  categoryIds: string[]
+  onCategoryChange: (categoryIds: string[]) => void
 }
 
-export function ExportFilters({ dateRange, onDateRangeChange, categoryId, onCategoryChange }: ExportFiltersProps) {
+export function ExportFilters({ dateRange, onDateRangeChange, categoryIds, onCategoryChange }: ExportFiltersProps) {
   const [categorySearch, setCategorySearch] = useState('')
   const debouncedCategorySearch = useDebounce(categorySearch, 250)
   const categoriesQuery = useCategories({ search: debouncedCategorySearch || undefined })
@@ -128,13 +128,12 @@ export function ExportFilters({ dateRange, onDateRangeChange, categoryId, onCate
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <PresetDropdown preset={dateRange.preset} onSelect={selectPreset} />
       <CustomRangeFilter dateRange={dateRange} onSelect={selectCustomRange} />
-      <CategoryCombobox
+      <CategoryMultiCombobox
         categories={categoriesQuery.data?.items ?? []}
         search={categorySearch}
         onSearchChange={setCategorySearch}
-        selectedId={categoryId}
-        onSelect={(category) => onCategoryChange(category?.id ?? null)}
-        includeAllOption
+        selectedIds={categoryIds}
+        onChange={onCategoryChange}
         className="sm:w-56"
       />
     </div>

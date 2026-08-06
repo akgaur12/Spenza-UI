@@ -1,6 +1,8 @@
 import { useNavigate } from '@tanstack/react-router'
+import { format, startOfYear, subYears } from 'date-fns'
 import { useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { env } from '@/config'
 import { ChartWrapper } from '@/features/analytics/components/chart-wrapper'
 import { TrendChart } from '@/features/analytics/components/trend-chart'
 import { useTrendAnalytics } from '@/features/analytics/hooks/use-trend-analytics'
@@ -25,7 +27,18 @@ export function TrendTabs({ startDate, endDate }: TrendTabsProps) {
   const isMobile = useMediaQuery('(max-width: 639px)')
   const navigate = useNavigate()
 
-  const trendQuery = useTrendAnalytics({ interval, start_date: startDate, end_date: endDate })
+  // Yearly ignores the page's global date-range filter — a single-year-or-less filter window
+  // would otherwise collapse this view to at most one bar. Instead it always shows a fixed
+  // trailing window (VITE_ANALYTICS_TREND_YEARLY_COUNT calendar years through today).
+  const trendQuery = useTrendAnalytics(
+    interval === 'yearly'
+      ? {
+          interval,
+          start_date: format(startOfYear(subYears(new Date(), env.analyticsTrendYearlyCount - 1)), 'yyyy-MM-dd'),
+          end_date: format(new Date(), 'yyyy-MM-dd'),
+        }
+      : { interval, start_date: startDate, end_date: endDate },
+  )
 
   function handlePointClick(point: TrendDataPoint) {
     const range = trendPointToDateRange(interval, point)

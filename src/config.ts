@@ -7,6 +7,7 @@ export const env = {
   isProd: import.meta.env.PROD,
   analyticsYearFilterCount: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_COUNT) || 6,
   analyticsYearFilterMinYear: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_MIN_YEAR) || 2000,
+  analyticsTrendYearlyCount: Number(import.meta.env.VITE_ANALYTICS_TREND_YEARLY_COUNT) || 6,
 } as const
 
 /**

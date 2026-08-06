@@ -45,6 +45,8 @@ export async function exportExpenses(params: ExportParams): Promise<ExportFile> 
   const response = await apiClient.get<Blob>(API_ENDPOINTS.importExport.export, {
     params,
     responseType: 'blob',
+    // Backend expects repeated `category_id=a&category_id=b`, not axios's default `category_id[]=a`.
+    paramsSerializer: { indexes: null },
   })
 
   const disposition = response.headers['content-disposition'] as string | undefined

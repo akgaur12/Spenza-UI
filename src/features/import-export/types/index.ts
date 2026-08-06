@@ -57,7 +57,7 @@ export interface ExportParams {
   format: ExportFormat
   start_date?: string
   end_date?: string
-  category_id?: string
+  category_id?: string[]
   search?: string
 }
 

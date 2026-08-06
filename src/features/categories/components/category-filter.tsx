@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 
 export type CategoryFilterValue = 'all' | 'default' | 'my'
 
@@ -21,12 +20,11 @@ export function CategoryFilter({ value, onChange }: CategoryFilterProps) {
         <Button
           key={option.value}
           type="button"
-          variant="outline"
+          variant={value === option.value ? 'secondary' : 'outline'}
           size="sm"
           role="radio"
           aria-checked={value === option.value}
           onClick={() => onChange(option.value)}
-          className={cn(value === option.value && 'border-primary bg-accent text-foreground')}
         >
           {option.label}
         </Button>
