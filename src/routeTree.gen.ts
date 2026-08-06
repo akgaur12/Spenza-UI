@@ -21,6 +21,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
 import { Route as AppCategoriesRouteImport } from './routes/_app/categories'
 import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
+import { Route as AppImportExportRouteImport } from './routes/_app/import-export'
 import { Route as AppOverviewRouteImport } from './routes/_app/overview'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
@@ -85,6 +86,11 @@ const AppExpensesRoute = AppExpensesRouteImport.update({
   path: '/expenses',
   getParentRoute: () => AppRoute,
 } as any)
+const AppImportExportRoute = AppImportExportRouteImport.update({
+  id: '/import-export',
+  path: '/import-export',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOverviewRoute = AppOverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AppAnalyticsRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
+  '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AppAnalyticsRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
+  '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/_app/analytics': typeof AppAnalyticsRoute
   '/_app/categories': typeof AppCategoriesRoute
   '/_app/expenses': typeof AppExpensesRoute
+  '/_app/import-export': typeof AppImportExportRoute
   '/_app/overview': typeof AppOverviewRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/settings': typeof AppSettingsRoute
@@ -173,6 +182,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/categories'
     | '/expenses'
+    | '/import-export'
     | '/overview'
     | '/profile'
     | '/settings'
@@ -190,6 +200,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/categories'
     | '/expenses'
+    | '/import-export'
     | '/overview'
     | '/profile'
     | '/settings'
@@ -208,6 +219,7 @@ export interface FileRouteTypes {
     | '/_app/analytics'
     | '/_app/categories'
     | '/_app/expenses'
+    | '/_app/import-export'
     | '/_app/overview'
     | '/_app/profile'
     | '/_app/settings'
@@ -313,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppExpensesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/import-export': {
+      id: '/_app/import-export'
+      path: '/import-export'
+      fullPath: '/import-export'
+      preLoaderRoute: typeof AppImportExportRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/overview': {
       id: '/_app/overview'
       path: '/overview'
@@ -348,6 +367,7 @@ interface AppRouteChildren {
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppCategoriesRoute: typeof AppCategoriesRoute
   AppExpensesRoute: typeof AppExpensesRoute
+  AppImportExportRoute: typeof AppImportExportRoute
   AppOverviewRoute: typeof AppOverviewRoute
   AppProfileRoute: typeof AppProfileRoute
   AppSettingsRoute: typeof AppSettingsRoute
@@ -357,6 +377,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppCategoriesRoute: AppCategoriesRoute,
   AppExpensesRoute: AppExpensesRoute,
+  AppImportExportRoute: AppImportExportRoute,
   AppOverviewRoute: AppOverviewRoute,
   AppProfileRoute: AppProfileRoute,
   AppSettingsRoute: AppSettingsRoute,

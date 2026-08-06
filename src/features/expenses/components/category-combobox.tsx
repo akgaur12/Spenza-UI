@@ -57,7 +57,7 @@ export function CategoryCombobox({
       <PopoverTrigger asChild>
         <Button
           type="button"
-          variant="outline"
+          variant={includeAllOption && selectedId ? 'secondary' : 'outline'}
           role="combobox"
           aria-expanded={open}
           disabled={disabled}

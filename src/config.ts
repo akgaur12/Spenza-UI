@@ -17,9 +17,8 @@ export const env = {
  * — this split is intentional and matches the backend's own routing (verified
  * against src/app.py and the module routers in the Spenza backend, not assumed).
  *
- * `import-export` is deliberately omitted: its route contracts haven't been
- * verified against the backend yet. Add it here — and only here — once
- * confirmed, rather than guessing paths.
+ * `importExport` route contracts were confirmed against the running backend's
+ * OpenAPI schema (GET /openapi.json) before being added here.
  */
 export const API_ENDPOINTS = {
   auth: {
@@ -67,6 +66,11 @@ export const API_ENDPOINTS = {
     trends: '/api/v1/analytics/trends',
     categories: '/api/v1/analytics/categories',
     calendarHeatmap: '/api/v1/analytics/calendar-heatmap',
+  },
+  importExport: {
+    importPreview: '/api/v1/import/expenses/preview',
+    importConfirm: '/api/v1/import/expenses/confirm',
+    export: '/api/v1/export/expenses',
   },
 } as const
 
