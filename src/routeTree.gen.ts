@@ -24,6 +24,7 @@ import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
 import { Route as AppImportExportRouteImport } from './routes/_app/import-export'
 import { Route as AppOverviewRouteImport } from './routes/_app/overview'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppReportsRouteImport } from './routes/_app/reports'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as ResetPasswordVerifyRouteImport } from './routes/reset-password_.verify'
 
@@ -101,6 +102,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
+  '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
+  '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/_app/import-export': typeof AppImportExportRoute
   '/_app/overview': typeof AppOverviewRoute
   '/_app/profile': typeof AppProfileRoute
+  '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
   '/reset-password_/verify': typeof ResetPasswordVerifyRoute
 }
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/import-export'
     | '/overview'
     | '/profile'
+    | '/reports'
     | '/settings'
     | '/reset-password/verify'
   fileRoutesByTo: FileRoutesByTo
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/import-export'
     | '/overview'
     | '/profile'
+    | '/reports'
     | '/settings'
     | '/reset-password/verify'
   id:
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/_app/import-export'
     | '/_app/overview'
     | '/_app/profile'
+    | '/_app/reports'
     | '/_app/settings'
     | '/reset-password_/verify'
   fileRoutesById: FileRoutesById
@@ -346,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/reports': {
+      id: '/_app/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/settings': {
       id: '/_app/settings'
       path: '/settings'
@@ -370,6 +389,7 @@ interface AppRouteChildren {
   AppImportExportRoute: typeof AppImportExportRoute
   AppOverviewRoute: typeof AppOverviewRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
 }
 
@@ -380,6 +400,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppImportExportRoute: AppImportExportRoute,
   AppOverviewRoute: AppOverviewRoute,
   AppProfileRoute: AppProfileRoute,
+  AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
 }
 

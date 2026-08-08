@@ -3,7 +3,12 @@ import { MobileNavigationItem } from '@/components/layout/mobile-navigation-item
 import { NAV_ITEMS } from '@/config/navigation'
 import { useAddExpenseModal } from '@/features/expenses/components/add-expense-provider'
 
-const [overview, expenses, analytics, settings] = NAV_ITEMS
+// Reports intentionally isn't one of the five bottom-nav slots (reachable via the drawer/sidebar
+// instead) — looked up explicitly by href rather than array position so NAV_ITEMS can grow.
+const overview = NAV_ITEMS.find((item) => item.href === '/overview')!
+const expenses = NAV_ITEMS.find((item) => item.href === '/expenses')!
+const analytics = NAV_ITEMS.find((item) => item.href === '/analytics')!
+const settings = NAV_ITEMS.find((item) => item.href === '/settings')!
 
 export function MobileBottomNavigation() {
   const { openAddExpenseModal } = useAddExpenseModal()

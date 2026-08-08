@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { exportExpenses } from '@/features/import-export/api/import-export.api'
 import type { ExportParams } from '@/features/import-export/types'
-import { downloadBlob } from '@/features/import-export/utils/download-file'
+import { downloadBlob } from '@/lib/download'
 import { getErrorMessage } from '@/lib/errors'
 
 export function useExportMutation() {

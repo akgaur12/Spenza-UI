@@ -6,7 +6,7 @@ export const env = {
   isDev: import.meta.env.DEV,
   isProd: import.meta.env.PROD,
   analyticsYearFilterCount: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_COUNT) || 6,
-  analyticsYearFilterMinYear: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_MIN_YEAR) || 2000,
+  analyticsYearFilterMinYear: Number(import.meta.env.VITE_ANALYTICS_YEAR_FILTER_MIN_YEAR) || 2020,
   analyticsTrendYearlyCount: Number(import.meta.env.VITE_ANALYTICS_TREND_YEARLY_COUNT) || 6,
 } as const
 
@@ -72,6 +72,11 @@ export const API_ENDPOINTS = {
     importPreview: '/api/v1/import/expenses/preview',
     importConfirm: '/api/v1/import/expenses/confirm',
     export: '/api/v1/export/expenses',
+  },
+  /** Confirmed against the running backend's OpenAPI schema and `src/modules/reports/router.py`. */
+  reports: {
+    generate: '/api/v1/reports/generate',
+    sendNow: '/api/v1/reports/send-now',
   },
 } as const
 

@@ -16,7 +16,7 @@ export function Topbar({ onOpenDrawer }: TopbarProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="hidden md:flex lg:hidden"
+        className="lg:hidden"
         aria-label="Open navigation menu"
         onClick={onOpenDrawer}
       >

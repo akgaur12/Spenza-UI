@@ -49,6 +49,18 @@ apiClient.interceptors.response.use(
       return Promise.reject(error)
     }
 
+    /**
+     * A request made with `responseType: 'blob'` (PDF/file downloads) still gets a JSON
+     * error body on failure, but axios parses the response per the request's configured
+     * `responseType` regardless of status — so a failed blob request lands here with
+     * `response.data` as an unparsed `Blob` instead of the expected `ApiErrorBody`. Decode
+     * it back to JSON first so the `error_code` check and `ApiError` below see real data.
+     */
+    const rawData: unknown = error.response.data
+    if (rawData instanceof Blob && rawData.type.includes('json')) {
+      error.response.data = JSON.parse(await rawData.text())
+    }
+
     const originalRequest = error.config as RetriableConfig | undefined
     const url = originalRequest?.url ?? ''
     const isExempt = AUTH_EXEMPT_PATHS.some((path) => url.includes(path))
