@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { useAuth } from '@/features/auth/components/auth-provider'
 import { cn } from '@/lib/utils'
 
 function LogoMark({ className }: { className?: string }) {
@@ -31,8 +32,13 @@ export function Logo({
   iconOnly?: boolean
   size?: 'default' | 'sm'
 }) {
+  const { isAuthenticated } = useAuth()
+
   return (
-    <Link to="/" className={cn('flex items-center gap-2 font-semibold tracking-tight', className)}>
+    <Link
+      to={isAuthenticated ? '/overview' : '/'}
+      className={cn('flex items-center gap-2 font-semibold tracking-tight', className)}
+    >
       <LogoMark className={cn('shrink-0', size === 'sm' ? 'size-6' : 'size-8')} />
       {!iconOnly && <span className={size === 'sm' ? 'text-base' : 'text-lg'}>Spenza</span>}
     </Link>

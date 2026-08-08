@@ -20,4 +20,7 @@ export default defineConfig({
       '@': new URL('./src', import.meta.url).pathname,
     },
   },
+  server: {
+    allowedHosts: ['.ngrok-free.app', '.ngrok-free.dev'],
+  },
 })

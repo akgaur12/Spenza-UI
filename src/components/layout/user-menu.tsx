@@ -18,7 +18,7 @@ export function UserMenu() {
   const logoutMutation = useLogoutMutation()
 
   function handleLogout() {
-    logoutMutation.mutate(undefined, { onSuccess: () => navigate({ to: '/login' }) })
+    logoutMutation.mutate(undefined, { onSuccess: () => navigate({ to: '/' }) })
   }
 
   return (

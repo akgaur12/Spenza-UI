@@ -18,7 +18,7 @@ export function DrawerNavigation({ open, onOpenChange }: DrawerNavigationProps) 
 
   function handleLogout() {
     onOpenChange(false)
-    logoutMutation.mutate(undefined, { onSuccess: () => navigate({ to: '/login' }) })
+    logoutMutation.mutate(undefined, { onSuccess: () => navigate({ to: '/' }) })
   }
 
   return (
