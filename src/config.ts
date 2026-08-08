@@ -78,6 +78,14 @@ export const API_ENDPOINTS = {
     generate: '/api/v1/reports/generate',
     sendNow: '/api/v1/reports/send-now',
   },
+  /** Confirmed against `src/modules/recurring_expenses/router.py` on the backend. */
+  recurringExpenses: {
+    list: '/api/v1/recurring-expenses',
+    detail: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}`,
+    pause: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}/pause`,
+    resume: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}/resume`,
+    run: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}/run`,
+  },
 } as const
 
 /** External links and contact addresses used across the site (footer, legal pages, etc). */

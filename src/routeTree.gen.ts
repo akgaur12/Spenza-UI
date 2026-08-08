@@ -24,6 +24,7 @@ import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
 import { Route as AppImportExportRouteImport } from './routes/_app/import-export'
 import { Route as AppOverviewRouteImport } from './routes/_app/overview'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppRecurringExpensesRouteImport } from './routes/_app/recurring-expenses'
 import { Route as AppReportsRouteImport } from './routes/_app/reports'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as ResetPasswordVerifyRouteImport } from './routes/reset-password_.verify'
@@ -102,6 +103,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRecurringExpensesRoute = AppRecurringExpensesRouteImport.update({
+  id: '/recurring-expenses',
+  path: '/recurring-expenses',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppReportsRoute = AppReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
+  '/recurring-expenses': typeof AppRecurringExpensesRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/import-export': typeof AppImportExportRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
+  '/recurring-expenses': typeof AppRecurringExpensesRoute
   '/reports': typeof AppReportsRoute
   '/settings': typeof AppSettingsRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/_app/import-export': typeof AppImportExportRoute
   '/_app/overview': typeof AppOverviewRoute
   '/_app/profile': typeof AppProfileRoute
+  '/_app/recurring-expenses': typeof AppRecurringExpensesRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/settings': typeof AppSettingsRoute
   '/reset-password_/verify': typeof ResetPasswordVerifyRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/import-export'
     | '/overview'
     | '/profile'
+    | '/recurring-expenses'
     | '/reports'
     | '/settings'
     | '/reset-password/verify'
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/import-export'
     | '/overview'
     | '/profile'
+    | '/recurring-expenses'
     | '/reports'
     | '/settings'
     | '/reset-password/verify'
@@ -233,6 +244,7 @@ export interface FileRouteTypes {
     | '/_app/import-export'
     | '/_app/overview'
     | '/_app/profile'
+    | '/_app/recurring-expenses'
     | '/_app/reports'
     | '/_app/settings'
     | '/reset-password_/verify'
@@ -358,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/recurring-expenses': {
+      id: '/_app/recurring-expenses'
+      path: '/recurring-expenses'
+      fullPath: '/recurring-expenses'
+      preLoaderRoute: typeof AppRecurringExpensesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/reports': {
       id: '/_app/reports'
       path: '/reports'
@@ -389,6 +408,7 @@ interface AppRouteChildren {
   AppImportExportRoute: typeof AppImportExportRoute
   AppOverviewRoute: typeof AppOverviewRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppRecurringExpensesRoute: typeof AppRecurringExpensesRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
 }
@@ -400,6 +420,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppImportExportRoute: AppImportExportRoute,
   AppOverviewRoute: AppOverviewRoute,
   AppProfileRoute: AppProfileRoute,
+  AppRecurringExpensesRoute: AppRecurringExpensesRoute,
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
 }

@@ -42,15 +42,15 @@ export function UserMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/settings">
-            <Settings />
-            Settings
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
           <Link to="/import-export">
             <ArrowLeftRight />
             Import / Export
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/settings">
+            <Settings />
+            Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
