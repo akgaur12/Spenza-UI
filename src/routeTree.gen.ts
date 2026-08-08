@@ -22,6 +22,7 @@ import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
 import { Route as AppCategoriesRouteImport } from './routes/_app/categories'
 import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
 import { Route as AppImportExportRouteImport } from './routes/_app/import-export'
+import { Route as AppNotificationsRouteImport } from './routes/_app/notifications'
 import { Route as AppOverviewRouteImport } from './routes/_app/overview'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppRecurringExpensesRouteImport } from './routes/_app/recurring-expenses'
@@ -93,6 +94,11 @@ const AppImportExportRoute = AppImportExportRouteImport.update({
   path: '/import-export',
   getParentRoute: () => AppRoute,
 } as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOverviewRoute = AppOverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
   '/import-export': typeof AppImportExportRoute
+  '/notifications': typeof AppNotificationsRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
   '/recurring-expenses': typeof AppRecurringExpensesRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
   '/import-export': typeof AppImportExportRoute
+  '/notifications': typeof AppNotificationsRoute
   '/overview': typeof AppOverviewRoute
   '/profile': typeof AppProfileRoute
   '/recurring-expenses': typeof AppRecurringExpensesRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/_app/categories': typeof AppCategoriesRoute
   '/_app/expenses': typeof AppExpensesRoute
   '/_app/import-export': typeof AppImportExportRoute
+  '/_app/notifications': typeof AppNotificationsRoute
   '/_app/overview': typeof AppOverviewRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/recurring-expenses': typeof AppRecurringExpensesRoute
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/expenses'
     | '/import-export'
+    | '/notifications'
     | '/overview'
     | '/profile'
     | '/recurring-expenses'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/expenses'
     | '/import-export'
+    | '/notifications'
     | '/overview'
     | '/profile'
     | '/recurring-expenses'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/_app/categories'
     | '/_app/expenses'
     | '/_app/import-export'
+    | '/_app/notifications'
     | '/_app/overview'
     | '/_app/profile'
     | '/_app/recurring-expenses'
@@ -356,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppImportExportRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/notifications': {
+      id: '/_app/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/overview': {
       id: '/_app/overview'
       path: '/overview'
@@ -406,6 +425,7 @@ interface AppRouteChildren {
   AppCategoriesRoute: typeof AppCategoriesRoute
   AppExpensesRoute: typeof AppExpensesRoute
   AppImportExportRoute: typeof AppImportExportRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
   AppOverviewRoute: typeof AppOverviewRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRecurringExpensesRoute: typeof AppRecurringExpensesRoute
@@ -418,6 +438,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCategoriesRoute: AppCategoriesRoute,
   AppExpensesRoute: AppExpensesRoute,
   AppImportExportRoute: AppImportExportRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
   AppOverviewRoute: AppOverviewRoute,
   AppProfileRoute: AppProfileRoute,
   AppRecurringExpensesRoute: AppRecurringExpensesRoute,

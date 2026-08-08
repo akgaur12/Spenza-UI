@@ -1,4 +1,4 @@
-import { Palette, ShieldCheck, User, UserCog } from 'lucide-react'
+import { Bell, Palette, ShieldCheck, User, UserCog } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { SettingsSectionKey } from '@/features/settings/types'
@@ -7,6 +7,7 @@ export const SETTINGS_SECTIONS: { value: SettingsSectionKey; label: string; icon
   { value: 'profile', label: 'Profile', icon: User },
   { value: 'appearance', label: 'Appearance', icon: Palette },
   { value: 'security', label: 'Security', icon: ShieldCheck },
+  { value: 'notifications', label: 'Notifications', icon: Bell },
   { value: 'account', label: 'Account', icon: UserCog },
 ]
 

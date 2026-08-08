@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { AccountSettings } from '@/features/settings/components/account-settings'
 import { AppearanceSettings } from '@/features/settings/components/appearance-settings'
+import { NotificationSettings } from '@/features/settings/components/notification-settings'
 import { ProfileSettings } from '@/features/settings/components/profile-settings'
 import { SecuritySettings } from '@/features/settings/components/security-settings'
 import { SettingsNavigation } from '@/features/settings/components/settings-navigation'
@@ -48,6 +49,9 @@ export function SettingsPage() {
             </TabsContent>
             <TabsContent value="security" className="mt-0">
               <SecuritySettings />
+            </TabsContent>
+            <TabsContent value="notifications" className="mt-0">
+              <NotificationSettings />
             </TabsContent>
             <TabsContent value="account" className="mt-0">
               <AccountSettings />

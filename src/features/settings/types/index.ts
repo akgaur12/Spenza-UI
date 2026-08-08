@@ -10,4 +10,4 @@ export interface DeleteUserRequest {
   current_password: string
 }
 
-export type SettingsSectionKey = 'profile' | 'appearance' | 'security' | 'account'
+export type SettingsSectionKey = 'profile' | 'appearance' | 'security' | 'notifications' | 'account'

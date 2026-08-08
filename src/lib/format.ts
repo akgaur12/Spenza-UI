@@ -1,4 +1,4 @@
-import { format, isThisYear, isToday, isYesterday } from 'date-fns'
+import { format, formatDistanceToNowStrict, isThisYear, isToday, isYesterday } from 'date-fns'
 
 const currencyFormatter = new Intl.NumberFormat('en-IN', {
   style: 'currency',
@@ -36,4 +36,9 @@ export function formatExpenseTableDate(isoDateTime: string): string {
 /** "Mon" — day-of-week for the table's Day column. */
 export function formatExpenseDay(isoDateTime: string): string {
   return format(new Date(isoDateTime), 'EEE')
+}
+
+/** "10 minutes ago" / "2 hours ago" / "3 days ago" — relative notification timestamp. */
+export function formatRelativeTime(isoDateTime: string): string {
+  return formatDistanceToNowStrict(new Date(isoDateTime), { addSuffix: true })
 }

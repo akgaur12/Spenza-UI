@@ -1,10 +1,10 @@
-import { Bell, Menu } from 'lucide-react'
-import { toast } from 'sonner'
+import { Menu } from 'lucide-react'
 import { Logo } from '@/components/common/logo'
 import { ThemeToggle } from '@/components/common/theme-toggle'
 import { PageHeader } from '@/components/layout/page-header'
 import { UserMenu } from '@/components/layout/user-menu'
 import { Button } from '@/components/ui/button'
+import { NotificationBell } from '@/features/notifications/components/notification-bell'
 
 interface TopbarProps {
   onOpenDrawer: () => void
@@ -28,14 +28,7 @@ export function Topbar({ onOpenDrawer }: TopbarProps) {
 
       <div className="ml-auto flex items-center gap-1">
         <ThemeToggle />
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Notifications"
-          onClick={() => toast('Notifications are coming soon')}
-        >
-          <Bell className="size-[1.1rem]" />
-        </Button>
+        <NotificationBell />
         <UserMenu />
       </div>
     </header>

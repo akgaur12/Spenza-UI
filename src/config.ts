@@ -86,6 +86,18 @@ export const API_ENDPOINTS = {
     resume: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}/resume`,
     run: (recurringExpenseId: string) => `/api/v1/recurring-expenses/${recurringExpenseId}/run`,
   },
+  /** Confirmed against `src/modules/notifications/router.py` on the backend. */
+  notifications: {
+    list: '/api/v1/notifications',
+    unreadCount: '/api/v1/notifications/unread-count',
+    readAll: '/api/v1/notifications/read-all',
+    markRead: (notificationId: string) => `/api/v1/notifications/${notificationId}/read`,
+    detail: (notificationId: string) => `/api/v1/notifications/${notificationId}`,
+  },
+  notificationPreferences: {
+    list: '/api/v1/notification-preferences',
+    update: (notificationType: string) => `/api/v1/notification-preferences/${notificationType}`,
+  },
 } as const
 
 /** External links and contact addresses used across the site (footer, legal pages, etc). */
