@@ -6,8 +6,8 @@ import type { SettingsSectionKey } from '@/features/settings/types'
 export const SETTINGS_SECTIONS: { value: SettingsSectionKey; label: string; icon: LucideIcon }[] = [
   { value: 'profile', label: 'Profile', icon: User },
   { value: 'appearance', label: 'Appearance', icon: Palette },
-  { value: 'security', label: 'Security', icon: ShieldCheck },
   { value: 'notifications', label: 'Notifications', icon: Bell },
+  { value: 'security', label: 'Security', icon: ShieldCheck },
   { value: 'account', label: 'Account', icon: UserCog },
 ]
 

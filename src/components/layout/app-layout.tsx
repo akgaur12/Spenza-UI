@@ -24,7 +24,7 @@ export function AppLayout() {
         <AppContainer>
           <Sidebar />
 
-          <div className="flex min-w-0 flex-1 flex-col overflow-y-auto">
+          <div className="scrollbar-thin flex min-w-0 flex-1 flex-col overflow-y-auto">
             <Topbar onOpenDrawer={() => setDrawerOpen(true)} />
             <ContentContainer>
               <Outlet />

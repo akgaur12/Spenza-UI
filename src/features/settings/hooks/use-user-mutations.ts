@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { changePassword } from '@/features/auth/api/auth.api'
 import { authKeys } from '@/features/auth/hooks/query-keys'
+import { notificationsKeys } from '@/features/notifications/hooks/query-keys'
 import { deleteUser, updateProfile, updateUsername } from '@/features/settings/api/users.api'
 import { getErrorCode, getErrorMessage } from '@/lib/errors'
 
@@ -43,10 +44,15 @@ export function useUpdateUsernameMutation() {
  * explicitly must NOT log the user out after a change-password.
  */
 export function useSettingsChangePasswordMutation() {
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: changePassword,
     onSuccess: () => {
       toast.success('Password updated')
+      // The backend also creates a PASSWORD_CHANGED notification as a side effect of
+      // this call — refetch now instead of waiting for the bell's next poll interval.
+      queryClient.invalidateQueries({ queryKey: notificationsKeys.all })
     },
     onError: (error) => {
       toast.error('Could not update password', { description: getErrorMessage(error) })

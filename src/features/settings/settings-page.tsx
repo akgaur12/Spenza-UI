@@ -47,11 +47,11 @@ export function SettingsPage() {
             <TabsContent value="appearance" className="mt-0">
               <AppearanceSettings />
             </TabsContent>
-            <TabsContent value="security" className="mt-0">
-              <SecuritySettings />
-            </TabsContent>
             <TabsContent value="notifications" className="mt-0">
               <NotificationSettings />
+            </TabsContent>
+            <TabsContent value="security" className="mt-0">
+              <SecuritySettings />
             </TabsContent>
             <TabsContent value="account" className="mt-0">
               <AccountSettings />

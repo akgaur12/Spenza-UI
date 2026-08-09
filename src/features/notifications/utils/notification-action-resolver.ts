@@ -12,9 +12,6 @@ export function resolveNotificationAction(notification: Notification): Notificat
       return { to: '/reports' }
     case 'recurring_expense_created':
       return { to: '/expenses' }
-    case 'import_completed':
-    case 'export_completed':
-      return { to: '/import-export' }
     default:
       return null
   }

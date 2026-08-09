@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { analyticsKeys } from '@/features/analytics/hooks/query-keys'
 import { dashboardKeys } from '@/features/dashboard/hooks/query-keys'
 import { expensesKeys } from '@/features/expenses/hooks/query-keys'
+import { notificationsKeys } from '@/features/notifications/hooks/query-keys'
 import {
   createRecurringExpense,
   deleteRecurringExpense,
@@ -112,6 +113,9 @@ export function useRunRecurringExpenseNowMutation() {
       toast.success('Expense created successfully.')
       invalidateRecurringExpenses(queryClient)
       invalidateGeneratedExpenseDependents(queryClient)
+      // The backend also creates a RECURRING_EXPENSE_CREATED notification as a side effect of
+      // this call — refetch now instead of waiting for the bell's next poll interval.
+      queryClient.invalidateQueries({ queryKey: notificationsKeys.all })
     },
     onError: (error) => {
       toast.error('Could not run recurring expense', { description: getErrorMessage(error) })

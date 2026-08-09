@@ -4,8 +4,6 @@
 export type NotificationType =
   | 'welcome'
   | 'report_ready'
-  | 'import_completed'
-  | 'export_completed'
   | 'recurring_expense_created'
   | 'password_changed'
   | 'system'

@@ -1,4 +1,5 @@
 import { Link, useNavigate } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { SectionError } from '@/components/common/section-error'
 import { Button } from '@/components/ui/button'
@@ -7,6 +8,7 @@ import {
   useMarkAllNotificationsReadMutation,
   useMarkNotificationReadMutation,
 } from '@/features/notifications/hooks/use-notification-mutations'
+import { notificationsKeys } from '@/features/notifications/hooks/query-keys'
 import { useRecentNotifications } from '@/features/notifications/hooks/use-recent-notifications'
 import type { Notification } from '@/features/notifications/types'
 import { resolveNotificationAction } from '@/features/notifications/utils/notification-action-resolver'
@@ -19,8 +21,20 @@ interface NotificationPreviewListProps {
 export function NotificationPreviewList({ onClose }: NotificationPreviewListProps) {
   const query = useRecentNotifications()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const markReadMutation = useMarkNotificationReadMutation()
   const markAllReadMutation = useMarkAllNotificationsReadMutation()
+
+  function handleViewAll() {
+    onClose()
+    // The full Notification Center's query is a separate cache entry from this preview list's —
+    // force it stale so it refetches on mount instead of showing whatever it last cached, which
+    // may predate a notification the user just saw appear here.
+    queryClient.invalidateQueries({
+      queryKey: notificationsKeys.all,
+      predicate: (q) => q.queryKey[1] === 'infinite',
+    })
+  }
 
   const items = query.data?.items ?? []
   const hasUnread = items.some((item) => !item.is_read)
@@ -50,7 +64,7 @@ export function NotificationPreviewList({ onClose }: NotificationPreviewListProp
         </Button>
       </div>
 
-      <div className="max-h-[60vh] overflow-y-auto border-t border-border">
+      <div className="scrollbar-thin max-h-[60vh] overflow-y-auto border-t border-border">
         {query.isPending && (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="size-5 animate-spin text-muted-foreground" />
@@ -78,7 +92,7 @@ export function NotificationPreviewList({ onClose }: NotificationPreviewListProp
       </div>
 
       <div className="border-t border-border p-1.5">
-        <Button variant="ghost" size="sm" className="w-full justify-center text-sm" asChild onClick={onClose}>
+        <Button variant="ghost" size="sm" className="w-full justify-center text-sm" asChild onClick={handleViewAll}>
           <Link to="/notifications">View all notifications</Link>
         </Button>
       </div>

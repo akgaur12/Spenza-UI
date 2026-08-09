@@ -1,4 +1,4 @@
-import { Bell, Download, FileText, Info, Repeat, ShieldCheck, Sparkles, Upload } from 'lucide-react'
+import { Bell, FileText, Info, Repeat, ShieldCheck, Sparkles } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { NotificationType } from '@/features/notifications/types'
 
@@ -7,8 +7,6 @@ import type { NotificationType } from '@/features/notifications/types'
 const NOTIFICATION_TYPE_ICONS: Partial<Record<NotificationType, LucideIcon>> = {
   welcome: Sparkles,
   report_ready: FileText,
-  import_completed: Upload,
-  export_completed: Download,
   recurring_expense_created: Repeat,
   password_changed: ShieldCheck,
   system: Info,
@@ -22,8 +20,6 @@ export function notificationIcon(type: NotificationType): LucideIcon {
 const NOTIFICATION_TYPE_LABELS: Partial<Record<NotificationType, string>> = {
   welcome: 'Welcome',
   report_ready: 'Report Ready',
-  import_completed: 'Import Completed',
-  export_completed: 'Export Completed',
   recurring_expense_created: 'Recurring Expense Created',
   password_changed: 'Password Changed',
   system: 'System',
