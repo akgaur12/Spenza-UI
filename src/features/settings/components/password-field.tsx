@@ -8,6 +8,7 @@ interface PasswordFieldProps<TFieldValues extends FieldValues> {
   label: string
   autoComplete?: string
   description?: string
+  placeholder?: string
 }
 
 export function PasswordField<TFieldValues extends FieldValues>({
@@ -16,6 +17,7 @@ export function PasswordField<TFieldValues extends FieldValues>({
   label,
   autoComplete,
   description,
+  placeholder = '••••••••',
 }: PasswordFieldProps<TFieldValues>) {
   return (
     <FormField
@@ -25,7 +27,12 @@ export function PasswordField<TFieldValues extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <PasswordInput placeholder="••••••••" autoComplete={autoComplete} {...field} />
+            <PasswordInput
+              placeholder={placeholder}
+              autoComplete={autoComplete}
+              className="placeholder:text-muted-foreground/60"
+              {...field}
+            />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

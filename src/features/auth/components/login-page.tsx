@@ -5,7 +5,6 @@ import { AuthCard } from '@/components/common/auth-card'
 import { AuthPageHeading, AuthPageLayout } from '@/components/common/auth-page-layout'
 import { LoadingButton } from '@/components/common/loading-button'
 import { PasswordInput } from '@/components/forms/password-input'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useLoginMutation } from '@/features/auth/hooks/use-auth-mutations'
@@ -18,7 +17,7 @@ export function LoginPage() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
-    defaultValues: { identifier: '', password: '', rememberMe: false },
+    defaultValues: { identifier: '', password: '' },
   })
 
   function onSubmit(values: LoginFormValues) {
@@ -75,24 +74,14 @@ export function LoginPage() {
                     </Link>
                   </div>
                   <FormControl>
-                    <PasswordInput placeholder="••••••••" autoComplete="current-password" {...field} />
+                    <PasswordInput
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      className="placeholder:text-muted-foreground/60"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="rememberMe"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center gap-2 space-y-0">
-                  <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} id="remember-me" />
-                  </FormControl>
-                  <FormLabel htmlFor="remember-me" className="cursor-pointer font-normal">
-                    Remember me
-                  </FormLabel>
                 </FormItem>
               )}
             />

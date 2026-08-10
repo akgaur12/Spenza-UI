@@ -25,18 +25,20 @@ export function ExpensesPage() {
 
   return (
     <div className="space-y-6">
-      <ExpenseHeader onAddExpense={openAddExpenseModal} />
+      <div className="sticky top-16 z-20 space-y-4 bg-background pb-4">
+        <ExpenseHeader onAddExpense={openAddExpenseModal} />
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <ExpenseSearch key={filters.resetKey} value={filters.search} onChange={filters.setSearch} />
-        <ExpenseFilters
-          categoryIds={filters.categoryIds}
-          onCategoryChange={filters.setCategoryIds}
-          dateRange={filters.dateRange}
-          onDateRangeChange={filters.setDateRange}
-          sort={filters.sort}
-          onSortChange={filters.setSort}
-        />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <ExpenseSearch key={filters.resetKey} value={filters.search} onChange={filters.setSearch} />
+          <ExpenseFilters
+            categoryIds={filters.categoryIds}
+            onCategoryChange={filters.setCategoryIds}
+            dateRange={filters.dateRange}
+            onDateRangeChange={filters.setDateRange}
+            sort={filters.sort}
+            onSortChange={filters.setSort}
+          />
+        </div>
       </div>
 
       <ExpenseTimeline

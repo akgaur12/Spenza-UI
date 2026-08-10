@@ -27,13 +27,11 @@ const FEATURES = [
     icon: BarChart3,
     title: 'PDF Reports',
     description: 'Polished, shareable summaries of your spending, generated automatically.',
-    comingSoon: true,
   },
   {
     icon: Mail,
     title: 'Monthly Email Reports',
     description: 'A recap of your spending delivered straight to your inbox, every month.',
-    comingSoon: true,
   },
 ]
 

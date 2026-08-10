@@ -47,7 +47,12 @@ export function ResetPasswordPage({ resetToken }: { resetToken: string }) {
                   <FormItem>
                     <FormLabel>New password</FormLabel>
                     <FormControl>
-                      <PasswordInput placeholder="••••••••" autoComplete="new-password" {...field} />
+                      <PasswordInput
+                        placeholder="Enter your new password"
+                        autoComplete="new-password"
+                        className="placeholder:text-muted-foreground/60"
+                        {...field}
+                      />
                     </FormControl>
                     <p className="text-xs text-muted-foreground">
                       At least 8 characters, with uppercase, lowercase, a number, and a symbol.
@@ -64,7 +69,12 @@ export function ResetPasswordPage({ resetToken }: { resetToken: string }) {
                   <FormItem>
                     <FormLabel>Confirm password</FormLabel>
                     <FormControl>
-                      <PasswordInput placeholder="••••••••" autoComplete="new-password" {...field} />
+                      <PasswordInput
+                        placeholder="Re-enter your new password"
+                        autoComplete="new-password"
+                        className="placeholder:text-muted-foreground/60"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

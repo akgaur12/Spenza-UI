@@ -1,3 +1,4 @@
+import { getRouteApi } from '@tanstack/react-router'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -11,15 +12,18 @@ import { RunNowDialog } from '@/features/recurring-expenses/components/run-now-d
 import { useRecurringExpenseFilters } from '@/features/recurring-expenses/hooks/use-recurring-expense-filters'
 import type { RecurringExpense } from '@/features/recurring-expenses/types'
 
+const routeApi = getRouteApi('/_app/recurring-expenses')
+
 interface PauseResumeTarget {
   recurringExpense: RecurringExpense
   action: 'pause' | 'resume'
 }
 
 export function RecurringExpensesPage() {
+  const { create } = routeApi.useSearch()
   const filters = useRecurringExpenseFilters()
 
-  const [formOpen, setFormOpen] = useState(false)
+  const [formOpen, setFormOpen] = useState(Boolean(create))
   const [editTarget, setEditTarget] = useState<RecurringExpense | null>(null)
   const [pauseResumeTarget, setPauseResumeTarget] = useState<PauseResumeTarget | null>(null)
   const [runNowTarget, setRunNowTarget] = useState<RecurringExpense | null>(null)

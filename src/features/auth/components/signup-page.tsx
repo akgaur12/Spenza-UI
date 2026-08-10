@@ -125,7 +125,12 @@ export function SignupPage() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <PasswordInput placeholder="••••••••" autoComplete="new-password" {...field} />
+                    <PasswordInput
+                      placeholder="Create a password"
+                      autoComplete="new-password"
+                      className="placeholder:text-muted-foreground/60"
+                      {...field}
+                    />
                   </FormControl>
                   <p className="text-xs text-muted-foreground">
                     At least 8 characters, with uppercase, lowercase, a number, and a symbol.
@@ -142,7 +147,12 @@ export function SignupPage() {
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <PasswordInput placeholder="••••••••" autoComplete="new-password" {...field} />
+                    <PasswordInput
+                      placeholder="Re-enter your password"
+                      autoComplete="new-password"
+                      className="placeholder:text-muted-foreground/60"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -154,17 +164,17 @@ export function SignupPage() {
               name="acceptTerms"
               render={({ field }) => (
                 <FormItem>
-                  <div className="flex flex-row items-start gap-2">
+                  <div className="flex flex-row items-center gap-2">
                     <FormControl>
                       <Checkbox checked={field.value} onCheckedChange={field.onChange} id="accept-terms" />
                     </FormControl>
                     <FormLabel
                       htmlFor="accept-terms"
-                      className="cursor-pointer text-[13px] leading-snug font-normal text-muted-foreground"
+                      className="cursor-pointer whitespace-nowrap text-[13px] font-normal text-muted-foreground"
                     >
                       I agree to the{' '}
                       <Link to="/terms" className="text-primary underline-offset-4 hover:underline">
-                        Terms and Conditions
+                        Terms & Conditions
                       </Link>{' '}
                       and{' '}
                       <Link to="/privacy" className="text-primary underline-offset-4 hover:underline">

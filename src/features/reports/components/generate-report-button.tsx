@@ -12,7 +12,6 @@ export function GenerateReportButton({ isLoading, disabled, onClick, className }
   return (
     <LoadingButton
       type="button"
-      size="lg"
       className={className}
       isLoading={isLoading}
       loadingText="Generating report…"

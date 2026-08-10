@@ -57,7 +57,13 @@ export function useLoginMutation() {
   return useMutation({
     mutationFn: login,
     onSuccess: (user) => {
-      queryClient.setQueryData(authKeys.me(), user)
+      // Seed the cache synchronously so the post-login route guard's `ensureQueryData`
+      // finds data immediately instead of racing a fresh `/me` fetch against the
+      // navigation. `login` doesn't return `full_name`, so backfill that in the
+      // background — a transient failure there must not block the redirect, since the
+      // login itself (cookies set, session created) already succeeded regardless.
+      queryClient.setQueryData(authKeys.me(), { ...user, full_name: null })
+      void queryClient.invalidateQueries({ queryKey: authKeys.me() })
       toast.success('Login successful', { description: `Welcome back, ${user.username}.` })
     },
     onError: (error) => {

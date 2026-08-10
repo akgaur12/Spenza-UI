@@ -41,12 +41,14 @@ export function SecuritySettings() {
                 name="currentPassword"
                 label="Current password"
                 autoComplete="current-password"
+                placeholder="Enter your current password"
               />
               <PasswordField
                 control={form.control}
                 name="newPassword"
                 label="New password"
                 autoComplete="new-password"
+                placeholder="Enter your new password"
                 description="At least 8 characters, with uppercase, lowercase, a number, and a symbol."
               />
               <PasswordField
@@ -54,6 +56,7 @@ export function SecuritySettings() {
                 name="confirmPassword"
                 label="Confirm new password"
                 autoComplete="new-password"
+                placeholder="Re-enter your new password"
               />
               <LoadingButton
                 type="submit"

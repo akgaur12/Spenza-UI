@@ -27,7 +27,6 @@ export function SendReportButton({ isLoading, disabled, onClick, className }: Se
     <LoadingButton
       type="button"
       variant="outline"
-      size="lg"
       className={className}
       isLoading={isLoading}
       loadingText={label}

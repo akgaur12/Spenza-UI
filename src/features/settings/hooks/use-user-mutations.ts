@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { changePassword } from '@/features/auth/api/auth.api'
 import { authKeys } from '@/features/auth/hooks/query-keys'
-import { notificationsKeys } from '@/features/notifications/hooks/query-keys'
 import { deleteUser, updateProfile, updateUsername } from '@/features/settings/api/users.api'
 import { getErrorCode, getErrorMessage } from '@/lib/errors'
 
@@ -39,20 +39,22 @@ export function useUpdateUsernameMutation() {
 }
 
 /**
- * A dedicated hook (not `useChangePasswordMutation` from the auth feature) because that one
- * clears the session on success for the "forgot password" flow — Settings' Security tab
- * explicitly must NOT log the user out after a change-password.
+ * The backend's change-password endpoint revokes every session for the user and clears
+ * this browser's auth cookies as part of the same response — the current session is
+ * already dead once this call succeeds, so we clear the cache and send the user to
+ * log back in rather than leaving them on a page that looks authenticated but isn't.
  */
 export function useSettingsChangePasswordMutation() {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   return useMutation({
     mutationFn: changePassword,
     onSuccess: () => {
-      toast.success('Password updated')
-      // The backend also creates a PASSWORD_CHANGED notification as a side effect of
-      // this call — refetch now instead of waiting for the bell's next poll interval.
-      queryClient.invalidateQueries({ queryKey: notificationsKeys.all })
+      queryClient.setQueryData(authKeys.me(), null)
+      queryClient.clear()
+      toast.success('Password updated', { description: 'Please log in again with your new password.' })
+      navigate({ to: '/login' })
     },
     onError: (error) => {
       toast.error('Could not update password', { description: getErrorMessage(error) })
@@ -70,6 +72,14 @@ export function useDeleteAccountMutation() {
       toast.success('Account deleted')
     },
     onError: (error) => {
+      // The backend emails an expense-data export before deleting the account, and only
+      // deletes if that email send succeeds — this error means the account is untouched.
+      if (getErrorCode(error) === 'ACCOUNT_DATA_EXPORT_FAILED') {
+        toast.error('Could not send your data export', {
+          description: "We couldn't email your expense data, so your account was not deleted. Please try again.",
+        })
+        return
+      }
       toast.error('Could not delete account', { description: getErrorMessage(error) })
     },
   })
