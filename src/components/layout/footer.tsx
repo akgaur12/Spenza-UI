@@ -25,6 +25,11 @@ export function Footer() {
             </a>
           </li>
           <li>
+            <Link to="/about" className={LINK_CLASSES}>
+              About
+            </Link>
+          </li>
+          <li>
             <Link to="/privacy" className={LINK_CLASSES}>
               Privacy Policy
             </Link>
