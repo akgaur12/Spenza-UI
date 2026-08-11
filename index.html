@@ -2,9 +2,76 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spenza</title>
+
+    <title>Spenza - Track Every Rupee, Know Where It Goes</title>
+    <meta
+      name="description"
+      content="Spenza is a modern expense tracker: log spending in seconds, organize it with smart categories, visualize trends with clean analytics, and generate shareable reports."
+    />
+    <meta
+      name="keywords"
+      content="expense tracker, budget tracker, personal finance, spending tracker, expense management, budgeting app, financial analytics, expense reports"
+    />
+    <meta name="author" content="Akash Gaur" />
+    <link rel="canonical" href="%VITE_APP_URL%/" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0d1117" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Spenza" />
+    <meta property="og:url" content="%VITE_APP_URL%/" />
+    <meta property="og:title" content="Spenza — Track Every Rupee, Know Where It Goes" />
+    <meta
+      property="og:description"
+      content="Log expenses in seconds, organize spending with smart categories, and see where your money goes with clean analytics and shareable reports."
+    />
+    <meta property="og:image" content="%VITE_APP_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Spenza — expense tracking, smart categories, and analytics" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="%VITE_APP_URL%/" />
+    <meta name="twitter:title" content="Spenza — Track Every Rupee, Know Where It Goes" />
+    <meta
+      name="twitter:description"
+      content="Log expenses in seconds, organize spending with smart categories, and see where your money goes with clean analytics and shareable reports."
+    />
+    <meta name="twitter:image" content="%VITE_APP_URL%/og-image.png" />
+    <meta name="twitter:image:alt" content="Spenza — expense tracking, smart categories, and analytics" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Spenza",
+        "url": "%VITE_APP_URL%/",
+        "description": "Spenza is a modern expense tracker: log spending in seconds, organize it with smart categories, visualize trends with clean analytics, and generate shareable reports.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "author": {
+          "@type": "Person",
+          "name": "Akash Gaur"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
