@@ -3,16 +3,23 @@ import { Card } from '@/components/ui/card'
 import { TrendBadge, type SummaryTrend } from '@/features/overview/components/trend-badge'
 import { cn } from '@/lib/utils'
 
+const TONE_CLASSES = {
+  primary: 'bg-primary/10 text-primary',
+  success: 'bg-success/10 text-success',
+  destructive: 'bg-destructive/10 text-destructive',
+} as const
+
 interface SummaryCardProps {
   title: string
   icon: LucideIcon
   amount: string
   meta?: string
   trend?: SummaryTrend
+  tone?: keyof typeof TONE_CLASSES
   onClick?: () => void
 }
 
-export function SummaryCard({ title, icon: Icon, amount, meta, trend, onClick }: SummaryCardProps) {
+export function SummaryCard({ title, icon: Icon, amount, meta, trend, tone = 'primary', onClick }: SummaryCardProps) {
   return (
     <Card className="h-full gap-0 border-border/70 p-0 shadow-none transition-shadow hover:shadow-sm">
       <button
@@ -27,7 +34,7 @@ export function SummaryCard({ title, icon: Icon, amount, meta, trend, onClick }:
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <span className={cn('flex size-8 shrink-0 items-center justify-center rounded-full', TONE_CLASSES[tone])}>
             <Icon className="size-4" />
           </span>
           <span className="text-xs font-medium text-muted-foreground">{title}</span>

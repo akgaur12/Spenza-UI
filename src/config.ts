@@ -13,10 +13,11 @@ export const env = {
 /**
  * Every backend route path, in one place, grouped by module.
  *
- * The `auth`/`user`/`admin` groups are unversioned (`/api/users`, `/api/admin/users`)
- * while `categories`/`expenses`/`dashboard`/`analytics` are versioned (`/api/v1/...`)
- * — this split is intentional and matches the backend's own routing (verified
- * against src/app.py and the module routers in the Spenza backend, not assumed).
+ * The `auth`/`user` groups are unversioned (`/api/users`) while every other
+ * module — including `admin` — is versioned (`/api/v1/...`). `admin.users`
+ * used to be unversioned too; the backend moved it to `/api/v1/admin/users`
+ * for consistency with the categories/notifications/email/stats admin
+ * routers, all of which were versioned from the start.
  *
  * `importExport` route contracts were confirmed against the running backend's
  * OpenAPI schema (GET /openapi.json) before being added here.
@@ -45,12 +46,19 @@ export const API_ENDPOINTS = {
     deleteUser: '/api/users/delete-user',
   },
   admin: {
-    users: '/api/admin/users',
-    user: (userId: string) => `/api/admin/users/${userId}`,
-    setUserActive: (userId: string) => `/api/admin/users/${userId}/active`,
-    unlockUser: (userId: string) => `/api/admin/users/${userId}/unlock`,
+    users: '/api/v1/admin/users',
+    user: (userId: string) => `/api/v1/admin/users/${userId}`,
+    setUserActive: (userId: string) => `/api/v1/admin/users/${userId}/active`,
+    unlockUser: (userId: string) => `/api/v1/admin/users/${userId}/unlock`,
+    updateUserRole: (userId: string) => `/api/v1/admin/users/${userId}/role`,
+    userSessions: (userId: string) => `/api/v1/admin/users/${userId}/sessions`,
     categories: '/api/v1/admin/categories',
     category: (categoryId: string) => `/api/v1/admin/categories/${categoryId}`,
+    notificationsBroadcast: '/api/v1/admin/notifications/broadcast',
+    notificationDeliveryLogs: '/api/v1/admin/notifications/delivery-logs',
+    emailConfig: '/api/v1/admin/email/config',
+    emailSend: '/api/v1/admin/email/send',
+    statsOverview: '/api/v1/admin/stats/overview',
   },
   categories: {
     list: '/api/v1/categories',

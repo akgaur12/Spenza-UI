@@ -1,12 +1,15 @@
+import { ShieldCheck } from 'lucide-react'
 import { Logo } from '@/components/common/logo'
 import { SidebarCollapseButton } from '@/components/layout/sidebar-collapse-button'
 import { useSidebar } from '@/components/layout/sidebar-context'
 import { SidebarItem } from '@/components/layout/sidebar-item'
 import { NAV_ITEMS } from '@/config/navigation'
+import { useIsAdmin } from '@/features/admin/hooks/use-is-admin'
 import { cn } from '@/lib/utils'
 
 export function Sidebar() {
   const { collapsed, toggleCollapsed } = useSidebar()
+  const { isAdmin } = useIsAdmin()
 
   return (
     <aside
@@ -34,6 +37,7 @@ export function Sidebar() {
             collapsed={collapsed}
           />
         ))}
+        {isAdmin && <SidebarItem title="Admin" href="/admin" icon={ShieldCheck} collapsed={collapsed} />}
       </nav>
 
       <div

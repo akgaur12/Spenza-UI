@@ -19,6 +19,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
 import { Route as AppCategoriesRouteImport } from './routes/_app/categories'
 import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
@@ -79,6 +80,11 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
   path: '/verify-email',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   id: '/analytics',
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin': typeof AppAdminRoute
   '/analytics': typeof AppAnalyticsRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin': typeof AppAdminRoute
   '/analytics': typeof AppAnalyticsRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/_app/admin': typeof AppAdminRoute
   '/_app/analytics': typeof AppAnalyticsRoute
   '/_app/categories': typeof AppCategoriesRoute
   '/_app/expenses': typeof AppExpensesRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/admin'
     | '/analytics'
     | '/categories'
     | '/expenses'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/admin'
     | '/analytics'
     | '/categories'
     | '/expenses'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/verify-email'
+    | '/_app/admin'
     | '/_app/analytics'
     | '/_app/categories'
     | '/_app/expenses'
@@ -360,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/admin': {
+      id: '/_app/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AppAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/analytics': {
       id: '/_app/analytics'
       path: '/analytics'
@@ -441,6 +460,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminRoute: typeof AppAdminRoute
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppCategoriesRoute: typeof AppCategoriesRoute
   AppExpensesRoute: typeof AppExpensesRoute
@@ -454,6 +474,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminRoute: AppAdminRoute,
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppCategoriesRoute: AppCategoriesRoute,
   AppExpensesRoute: AppExpensesRoute,
