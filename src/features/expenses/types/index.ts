@@ -51,7 +51,7 @@ export interface ExpenseUpdateRequest {
 
 export type ExpenseSortOption = 'newest' | 'oldest' | 'highest' | 'lowest'
 
-export type ExpenseDateRangePreset = 'today' | 'week' | 'month' | 'year' | 'custom'
+export type ExpenseDateRangePreset = 'today' | 'week' | 'month' | 'year' | 'monthYear' | 'custom'
 
 export interface ExpenseDateRange {
   preset: ExpenseDateRangePreset

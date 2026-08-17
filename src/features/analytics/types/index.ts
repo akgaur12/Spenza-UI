@@ -69,7 +69,7 @@ export interface CalendarHeatmapParams {
 }
 
 /** The global filter bar's date-range options — distinct from the Expenses feature's presets (rolling windows, not calendar weeks). */
-export type AnalyticsDateRangePreset = 'today' | 'last7days' | 'month' | 'last30days' | 'year' | 'custom'
+export type AnalyticsDateRangePreset = 'today' | 'last7days' | 'month' | 'last30days' | 'year' | 'monthYear' | 'custom'
 
 export interface AnalyticsDateRange {
   preset: AnalyticsDateRangePreset

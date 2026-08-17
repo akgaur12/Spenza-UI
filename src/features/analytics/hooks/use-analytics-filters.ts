@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { AnalyticsDateRange, AnalyticsDateRangePreset } from '@/features/analytics/types'
-import { resolveDateRangePreset } from '@/features/analytics/utils/date-range'
+import { resolveDateRangePreset, resolveMonthYearRange, resolveYearRange } from '@/features/analytics/utils/date-range'
 
 const DEFAULT_PRESET: AnalyticsDateRangePreset = 'month'
 
@@ -21,6 +21,14 @@ export function useAnalyticsFilters() {
     setDateRange({ preset: 'custom', startDate, endDate })
   }
 
+  function setMonthYear(month: number, year: number) {
+    setDateRange({ preset: 'monthYear', ...resolveMonthYearRange(month, year) })
+  }
+
+  function setYear(year: number) {
+    setDateRange({ preset: 'year', ...resolveYearRange(year) })
+  }
+
   function reset() {
     setDateRange(defaultDateRange())
   }
@@ -32,7 +40,7 @@ export function useAnalyticsFilters() {
     [dateRange.startDate, dateRange.endDate],
   )
 
-  return { dateRange, setPreset, setCustomRange, reset, isDefault, params }
+  return { dateRange, setPreset, setCustomRange, setMonthYear, setYear, reset, isDefault, params }
 }
 
 export type AnalyticsFiltersState = ReturnType<typeof useAnalyticsFilters>

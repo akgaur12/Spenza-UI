@@ -29,6 +29,8 @@ export function AnalyticsFiltersBar({ filters }: AnalyticsFiltersBarProps) {
       <AnalyticsDateRangeFilter
         value={filters.dateRange}
         onPresetChange={filters.setPreset}
+        onMonthYearChange={filters.setMonthYear}
+        onYearChange={filters.setYear}
         onCustomRangeChange={filters.setCustomRange}
         className="shrink-0"
       />
