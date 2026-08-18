@@ -51,6 +51,7 @@ export function MonthlyCategoryChart({ startDate, endDate }: MonthlyCategoryChar
     : []
 
   function goToExpenses(startAt: string, endAt: string, categoryKey?: string) {
+    if (isMobile) return
     navigate({
       to: '/expenses',
       search: { start_date: startAt, end_date: endAt, category_id: categoryKey === 'other' ? undefined : categoryKey },
@@ -93,7 +94,7 @@ export function MonthlyCategoryChart({ startDate, endDate }: MonthlyCategoryChar
               const row = singlePeriodRows[Number(state.activeTooltipIndex)]
               if (row) goToExpenses(monthly.data[0].start_date, monthly.data[0].end_date, row.key)
             }}
-            className="cursor-pointer"
+            className={isMobile ? undefined : 'cursor-pointer'}
           >
             <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
@@ -129,7 +130,7 @@ export function MonthlyCategoryChart({ startDate, endDate }: MonthlyCategoryChar
               const point = monthly.data[Number(state.activeTooltipIndex)]
               if (point) goToExpenses(point.start_date, point.end_date)
             }}
-            className="cursor-pointer"
+            className={isMobile ? undefined : 'cursor-pointer'}
           >
             <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }} />

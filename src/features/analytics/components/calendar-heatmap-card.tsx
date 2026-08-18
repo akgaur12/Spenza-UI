@@ -10,6 +10,7 @@ import { ChartWrapper } from '@/features/analytics/components/chart-wrapper'
 import { YearDropdown } from '@/features/analytics/components/year-dropdown'
 import { useCalendarHeatmap } from '@/features/analytics/hooks/use-calendar-heatmap'
 import type { CalendarHeatmapDay } from '@/features/analytics/types'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { formatCurrency } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
@@ -104,6 +105,7 @@ function HeatmapLegend() {
 
 /** Defaults to the current year — independent of the page's global date-range filter, matching the other pattern charts. */
 export function CalendarHeatmapCard() {
+  const isMobile = useMediaQuery('(max-width: 639px)')
   const [hovered, setHovered] = useState<HoveredCell | null>(null)
   const [year, setYear] = useState(() => new Date().getFullYear())
   const [expanded, setExpanded] = useState(false)
@@ -124,6 +126,7 @@ export function CalendarHeatmapCard() {
   }
 
   function selectDay(day: CalendarHeatmapDay) {
+    if (isMobile) return
     navigate({ to: '/expenses', search: { start_date: day.date, end_date: day.date } })
   }
 

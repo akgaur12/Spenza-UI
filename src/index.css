@@ -184,4 +184,19 @@
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: var(--muted-foreground);
   }
+
+  /* Recharts gives its root <svg>, its z-index layer groups, and individual shapes (pie
+     sectors, etc.) tabindex for keyboard a11y, which draws the browser's default focus
+     outline as a stray white box the moment any part of a chart is clicked/tapped. The
+     substring selector catches all of them regardless of which specific element or
+     Recharts version is involved. */
+  [class*='recharts']:focus {
+    outline: none;
+  }
+
+  /* On touch devices, tapping the chart also triggers the mobile tap-highlight flash — a
+     separate effect from :focus outline, so it needs its own reset. */
+  [class*='recharts'] {
+    -webkit-tap-highlight-color: transparent;
+  }
 }

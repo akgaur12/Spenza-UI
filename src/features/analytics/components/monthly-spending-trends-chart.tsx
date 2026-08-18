@@ -42,14 +42,14 @@ export function MonthlySpendingTrendsChart() {
           data={data}
           margin={{ left: isMobile ? 0 : 4, right: 8, top: 8, bottom: 8 }}
           onClick={(state: { activeTooltipIndex?: number | string | null }) => {
-            if (state?.activeTooltipIndex == null) return
+            if (isMobile || state?.activeTooltipIndex == null) return
             const point = data[Number(state.activeTooltipIndex)]
             if (point) {
               const clickRange = trendPointToDateRange('monthly', point)
               navigate({ to: '/expenses', search: { start_date: clickRange.start_date, end_date: clickRange.end_date } })
             }
           }}
-          className="cursor-pointer"
+          className={isMobile ? undefined : 'cursor-pointer'}
         >
           <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis

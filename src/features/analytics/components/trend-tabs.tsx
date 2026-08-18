@@ -41,6 +41,7 @@ export function TrendTabs({ startDate, endDate }: TrendTabsProps) {
   )
 
   function handlePointClick(point: TrendDataPoint) {
+    if (isMobile) return
     const range = trendPointToDateRange(interval, point)
     navigate({ to: '/expenses', search: { start_date: range.start_date, end_date: range.end_date } })
   }
