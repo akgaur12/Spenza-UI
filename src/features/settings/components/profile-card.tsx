@@ -56,7 +56,6 @@ export function ProfileCard({ user, onDirtyChange }: ProfileCardProps) {
           <CardContent className="space-y-6">
             <div className="flex items-center gap-4">
               <ProfileAvatar user={user} className="size-16" />
-              <p className="text-sm text-muted-foreground">Profile photo support coming soon.</p>
             </div>
 
             <EditableField

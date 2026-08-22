@@ -113,6 +113,6 @@ export const SITE_LINKS = {
   github: 'https://github.com/akgaur12',
   medium: 'https://medium.com/@ak_gaur',
   linkedin: 'https://www.linkedin.com/in/akgaur12/',
-  privacyEmail: 'privacy@spenza.app',
-  legalEmail: 'legal@spenza.app',
+  privacyEmail: 'support.spenza@gmail.com',
+  legalEmail: 'support.spenza@gmail.com',
 } as const

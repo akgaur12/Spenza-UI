@@ -6,33 +6,33 @@
 :root {
   --radius: 0.625rem;
 
-  /* Off-white background, never pure white */
-  --background: #fafafa;
-  --foreground: #111827;
+  /* Soft blue-tinted background, white surfaces sit on top */
+  --background: #f3f7fb;
+  --foreground: #0f172a;
 
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #0f172a;
 
   --popover: #ffffff;
-  --popover-foreground: #111827;
+  --popover-foreground: #0f172a;
 
   --primary: #2563eb;
-  --primary-foreground: #fafafa;
+  --primary-foreground: #f8fafc;
 
-  --secondary: #f3f4f6;
-  --secondary-foreground: #111827;
+  --secondary: #eef3f9;
+  --secondary-foreground: #0f172a;
 
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
+  --muted: #eef3f9;
+  --muted-foreground: #64748b;
 
-  --accent: #eff6ff;
+  --accent: #e8f1fe;
   --accent-foreground: #2563eb;
 
   --destructive: #dc2626;
-  --destructive-foreground: #fafafa;
+  --destructive-foreground: #f8fafc;
 
   --success: #16a34a;
-  --success-foreground: #fafafa;
+  --success-foreground: #f8fafc;
 
   --border: #e5e7eb;
   --input: #e5e7eb;
@@ -47,8 +47,9 @@
   --chart-4: #a855f7;
   --chart-5: #ec4899;
 
-  --sidebar: #fafafa;
-  --sidebar-foreground: #111827;
+  /* White sidebar panel, distinct from the tinted page background */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
   --sidebar-border: #e5e7eb;
 }
 
