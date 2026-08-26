@@ -8,6 +8,7 @@ import { Sidebar } from '@/components/layout/sidebar'
 import { SidebarProvider } from '@/components/layout/sidebar-context'
 import { Topbar } from '@/components/layout/topbar'
 import { AddExpenseProvider } from '@/features/expenses/components/add-expense-provider'
+import { AssistantProvider } from '@/features/assistant/components/assistant-provider'
 import { useMediaQuery } from '@/hooks/use-media-query'
 
 export function AppLayout() {
@@ -21,19 +22,21 @@ export function AppLayout() {
   return (
     <SidebarProvider>
       <AddExpenseProvider>
-        <AppContainer>
-          <Sidebar />
+        <AssistantProvider>
+          <AppContainer>
+            <Sidebar />
 
-          <div className="scrollbar-thin flex min-w-0 flex-1 flex-col overflow-y-auto">
-            <Topbar onOpenDrawer={() => setDrawerOpen(true)} />
-            <ContentContainer>
-              <Outlet />
-            </ContentContainer>
-          </div>
+            <div className="scrollbar-thin flex min-w-0 flex-1 flex-col overflow-y-auto">
+              <Topbar onOpenDrawer={() => setDrawerOpen(true)} />
+              <ContentContainer>
+                <Outlet />
+              </ContentContainer>
+            </div>
 
-          <MobileBottomNavigation />
-          <DrawerNavigation open={drawerOpen} onOpenChange={setDrawerOpen} />
-        </AppContainer>
+            <MobileBottomNavigation />
+            <DrawerNavigation open={drawerOpen} onOpenChange={setDrawerOpen} />
+          </AppContainer>
+        </AssistantProvider>
       </AddExpenseProvider>
     </SidebarProvider>
   )

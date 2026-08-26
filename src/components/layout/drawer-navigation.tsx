@@ -33,7 +33,8 @@ export function DrawerNavigation({ open, onOpenChange }: DrawerNavigationProps) 
         </SheetHeader>
 
         <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Primary">
-          {NAV_ITEMS.map((item) => (
+          {/* On mobile the floating bubble is the only AI entry point — no separate full-assistant link here. */}
+          {NAV_ITEMS.filter((item) => item.href !== '/assistant').map((item) => (
             <Link
               key={item.href}
               to={item.href}

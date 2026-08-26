@@ -106,6 +106,13 @@ export const API_ENDPOINTS = {
     list: '/api/v1/notification-preferences',
     update: (notificationType: string) => `/api/v1/notification-preferences/${notificationType}`,
   },
+  /** Confirmed against the running backend's OpenAPI schema and `src/modules/ai_assistant/router.py`. */
+  chats: {
+    list: '/api/v1/chats',
+    detail: (chatId: string) => `/api/v1/chats/${chatId}`,
+    messages: (chatId: string) => `/api/v1/chats/${chatId}/messages`,
+    cancelMessage: (chatId: string, messageId: string) => `/api/v1/chats/${chatId}/messages/${messageId}/cancel`,
+  },
 } as const
 
 /** External links and contact addresses used across the site (footer, legal pages, etc). */

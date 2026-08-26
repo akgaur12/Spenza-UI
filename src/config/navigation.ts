@@ -1,4 +1,4 @@
-import { BarChart3, FileText, Home, Repeat, Settings, Wallet } from 'lucide-react'
+import { BarChart3, FileText, Home, Repeat, Settings, Sparkles, Wallet } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface NavItem {
@@ -13,5 +13,6 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'Analytics', href: '/analytics', icon: BarChart3 },
   { title: 'Reports', href: '/reports', icon: FileText },
   { title: 'Recurring Expenses', href: '/recurring-expenses', icon: Repeat },
+  { title: 'Assistant', href: '/assistant', icon: Sparkles },
   { title: 'Settings', href: '/settings', icon: Settings },
 ]

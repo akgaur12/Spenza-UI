@@ -21,6 +21,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppAssistantRouteImport } from './routes/_app/assistant'
 import { Route as AppCategoriesRouteImport } from './routes/_app/categories'
 import { Route as AppExpensesRouteImport } from './routes/_app/expenses'
 import { Route as AppImportExportRouteImport } from './routes/_app/import-export'
@@ -91,6 +92,11 @@ const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAssistantRoute = AppAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCategoriesRoute = AppCategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/verify-email': typeof VerifyEmailRoute
   '/admin': typeof AppAdminRoute
   '/analytics': typeof AppAnalyticsRoute
+  '/assistant': typeof AppAssistantRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
   '/import-export': typeof AppImportExportRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/verify-email': typeof VerifyEmailRoute
   '/admin': typeof AppAdminRoute
   '/analytics': typeof AppAnalyticsRoute
+  '/assistant': typeof AppAssistantRoute
   '/categories': typeof AppCategoriesRoute
   '/expenses': typeof AppExpensesRoute
   '/import-export': typeof AppImportExportRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/verify-email': typeof VerifyEmailRoute
   '/_app/admin': typeof AppAdminRoute
   '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/assistant': typeof AppAssistantRoute
   '/_app/categories': typeof AppCategoriesRoute
   '/_app/expenses': typeof AppExpensesRoute
   '/_app/import-export': typeof AppImportExportRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/admin'
     | '/analytics'
+    | '/assistant'
     | '/categories'
     | '/expenses'
     | '/import-export'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/admin'
     | '/analytics'
+    | '/assistant'
     | '/categories'
     | '/expenses'
     | '/import-export'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_app/admin'
     | '/_app/analytics'
+    | '/_app/assistant'
     | '/_app/categories'
     | '/_app/expenses'
     | '/_app/import-export'
@@ -386,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/assistant': {
+      id: '/_app/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AppAssistantRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/categories': {
       id: '/_app/categories'
       path: '/categories'
@@ -462,6 +481,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
   AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppAssistantRoute: typeof AppAssistantRoute
   AppCategoriesRoute: typeof AppCategoriesRoute
   AppExpensesRoute: typeof AppExpensesRoute
   AppImportExportRoute: typeof AppImportExportRoute
@@ -476,6 +496,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRoute,
   AppAnalyticsRoute: AppAnalyticsRoute,
+  AppAssistantRoute: AppAssistantRoute,
   AppCategoriesRoute: AppCategoriesRoute,
   AppExpensesRoute: AppExpensesRoute,
   AppImportExportRoute: AppImportExportRoute,
