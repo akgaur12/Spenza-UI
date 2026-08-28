@@ -1,5 +1,5 @@
-import { getRouteApi } from '@tanstack/react-router'
-import { Menu } from 'lucide-react'
+import { getRouteApi, Link } from '@tanstack/react-router'
+import { Menu, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Logo } from '@/components/common/logo'
 import { ThemeToggle } from '@/components/common/theme-toggle'
@@ -15,6 +15,7 @@ import { NewChatHero } from '@/features/assistant/components/new-chat-hero'
 import { useAssistant } from '@/features/assistant/hooks/use-assistant'
 import { useChatMessagesMeta } from '@/features/assistant/hooks/use-chat-messages'
 import { useSendToAssistant } from '@/features/assistant/hooks/use-send-to-assistant'
+import { useAuth } from '@/features/auth/components/auth-provider'
 import { NotificationBell } from '@/features/notifications/components/notification-bell'
 import { useMediaQuery } from '@/hooks/use-media-query'
 
@@ -27,6 +28,7 @@ const routeApi = getRouteApi('/_app/assistant')
  * The top header mirrors Topbar.tsx exactly so it still reads as the same app.
  */
 export function AssistantPage() {
+  const { user } = useAuth()
   const search = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
@@ -57,6 +59,23 @@ export function AssistantPage() {
   }
 
   const isStreamingHere = streaming.state.isStreaming && streaming.state.activeChatId === activeChatId
+
+  if (!user?.ai_assistant.enabled) {
+    return (
+      <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-4 bg-background px-4 text-center">
+        <div className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+          <Sparkles className="size-6" />
+        </div>
+        <div className="max-w-sm space-y-1">
+          <h1 className="text-lg font-semibold text-foreground">Spenza AI isn't available for your account</h1>
+          <p className="text-sm text-muted-foreground">Ask an admin to grant you access to the AI assistant.</p>
+        </div>
+        <Button asChild variant="outline">
+          <Link to="/overview">Back to Overview</Link>
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className="fixed inset-0 z-40 flex bg-background">

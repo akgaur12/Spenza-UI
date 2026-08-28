@@ -52,6 +52,7 @@ export const API_ENDPOINTS = {
     unlockUser: (userId: string) => `/api/v1/admin/users/${userId}/unlock`,
     updateUserRole: (userId: string) => `/api/v1/admin/users/${userId}/role`,
     userSessions: (userId: string) => `/api/v1/admin/users/${userId}/sessions`,
+    userAiAssistant: (userId: string) => `/api/v1/admin/users/${userId}/ai-assistant`,
     categories: '/api/v1/admin/categories',
     category: (categoryId: string) => `/api/v1/admin/categories/${categoryId}`,
     notificationsBroadcast: '/api/v1/admin/notifications/broadcast',

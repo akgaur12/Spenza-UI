@@ -8,7 +8,7 @@ import type {
   ResetPasswordRequest,
   ResetTokenResponse,
   SignupRequest,
-  UserMe,
+  UserMeResponse,
   UserPublic,
   VerifyResetOtpRequest,
   VerifySignupOtpRequest,
@@ -53,8 +53,8 @@ export async function logoutAllDevices(): Promise<void> {
   await apiClient.post<ApiSuccessResponse<null>>(endpoints.logoutAllDevices)
 }
 
-export async function getMe(): Promise<UserMe> {
-  const { data } = await apiClient.get<ApiSuccessResponse<UserMe>>(endpoints.me)
+export async function getMe(): Promise<UserMeResponse> {
+  const { data } = await apiClient.get<ApiSuccessResponse<UserMeResponse>>(endpoints.me)
   return data.data
 }
 

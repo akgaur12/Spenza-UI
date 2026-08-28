@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { AiAssistantStatusBadge } from '@/features/admin/components/users-tab/ai-assistant-status-badge'
 import { UserRowActions } from '@/features/admin/components/users-tab/user-row-actions'
 import { useSetUserActiveMutation } from '@/features/admin/hooks/use-admin-user-mutations'
 import type { AdminUserResponse } from '@/features/admin/types'
@@ -18,6 +19,7 @@ interface UsersTableProps {
   onViewSessions: (user: AdminUserResponse) => void
   onNotify: (user: AdminUserResponse) => void
   onSendEmail: (user: AdminUserResponse) => void
+  onManageAiAssistant: (user: AdminUserResponse) => void
   onDelete: (user: AdminUserResponse) => void
 }
 
@@ -29,6 +31,7 @@ export function UsersTable({
   onViewSessions,
   onNotify,
   onSendEmail,
+  onManageAiAssistant,
   onDelete,
 }: UsersTableProps) {
   const setActiveMutation = useSetUserActiveMutation()
@@ -40,6 +43,7 @@ export function UsersTable({
           <TableHead>User</TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Status</TableHead>
+          <TableHead>AI Assistant</TableHead>
           <TableHead>Created</TableHead>
           <TableHead className="w-0">Actions</TableHead>
         </TableRow>
@@ -74,6 +78,9 @@ export function UsersTable({
                   {locked && <Badge variant="destructive">Locked</Badge>}
                 </div>
               </TableCell>
+              <TableCell>
+                <AiAssistantStatusBadge userId={user.id} onClick={() => onManageAiAssistant(user)} />
+              </TableCell>
               <TableCell className="text-muted-foreground">{formatExpenseTableDate(user.created_at)}</TableCell>
               <TableCell>
                 <UserRowActions
@@ -85,6 +92,7 @@ export function UsersTable({
                   onViewSessions={() => onViewSessions(user)}
                   onNotify={() => onNotify(user)}
                   onSendEmail={() => onSendEmail(user)}
+                  onManageAiAssistant={() => onManageAiAssistant(user)}
                   onDelete={() => onDelete(user)}
                 />
               </TableCell>

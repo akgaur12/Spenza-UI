@@ -15,6 +15,24 @@ export interface UserProfile extends UserMe {
   updated_at: string
 }
 
+/** The subset of a user's own AI assistant status/usage exposed via `GET /api/users/me` — deliberately omits the per-minute limit, which isn't meaningful in a profile-style UI. */
+export interface AIAssistantMeStatus {
+  enabled: boolean
+  max_messages_per_day: number | null
+  max_messages_per_month: number | null
+  max_new_chats_per_day: number | null
+  max_new_chats_per_month: number | null
+  messages_sent_today: number
+  messages_sent_this_month: number
+  chats_created_today: number
+  chats_created_this_month: number
+}
+
+/** `GET /api/users/me`'s actual response shape — `UserMe` plus the caller's own AI assistant status. */
+export interface UserMeResponse extends UserMe {
+  ai_assistant: AIAssistantMeStatus
+}
+
 export interface SignupRequest {
   email: string
   username: string

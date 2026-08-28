@@ -52,6 +52,30 @@ export interface RevokedSessionsResponse {
   revoked: number
 }
 
+/** Admin-facing view: every configured limit plus the user's current usage. */
+export interface AIAssistantPermissionResponse {
+  enabled: boolean
+  max_messages_per_minute: number | null
+  max_messages_per_day: number | null
+  max_messages_per_month: number | null
+  max_new_chats_per_day: number | null
+  max_new_chats_per_month: number | null
+  messages_sent_today: number
+  messages_sent_this_month: number
+  chats_created_today: number
+  chats_created_this_month: number
+}
+
+/** PATCH semantics — omit a field to leave it untouched, send explicit `null` to make that limit unlimited. */
+export interface AIAssistantPermissionUpdate {
+  enabled?: boolean
+  max_messages_per_minute?: number | null
+  max_messages_per_day?: number | null
+  max_messages_per_month?: number | null
+  max_new_chats_per_day?: number | null
+  max_new_chats_per_month?: number | null
+}
+
 export type { CategoryResponse as SystemCategoryResponse } from '@/features/categories/types'
 
 export interface AdminCategoryListParams {

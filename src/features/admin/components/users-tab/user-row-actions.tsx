@@ -18,6 +18,7 @@ interface UserRowActionsProps {
   onViewSessions: () => void
   onNotify: () => void
   onSendEmail: () => void
+  onManageAiAssistant: () => void
   onDelete: () => void
 }
 
@@ -30,6 +31,7 @@ export function UserRowActions({
   onViewSessions,
   onNotify,
   onSendEmail,
+  onManageAiAssistant,
   onDelete,
 }: UserRowActionsProps) {
   return (
@@ -46,6 +48,7 @@ export function UserRowActions({
         <DropdownMenuItem onClick={onViewSessions}>View sessions</DropdownMenuItem>
         <DropdownMenuItem onClick={onNotify}>Send notification</DropdownMenuItem>
         <DropdownMenuItem onClick={onSendEmail}>Send email</DropdownMenuItem>
+        <DropdownMenuItem onClick={onManageAiAssistant}>Manage AI assistant access</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" disabled={isOwnAccount} onClick={onDelete}>
           Delete user

@@ -2,13 +2,16 @@ import { useLocation } from '@tanstack/react-router'
 import { Loader2, Sparkles } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAssistant } from '@/features/assistant/hooks/use-assistant'
+import { useAuth } from '@/features/auth/components/auth-provider'
 import { cn } from '@/lib/utils'
 
 /** Available on every authenticated page except the full /assistant route, where it would just float over itself. */
 export function FloatingAIButton() {
   const { pathname } = useLocation()
   const { isPanelOpen, openPanel, streaming } = useAssistant()
+  const { user } = useAuth()
 
+  if (!user?.ai_assistant.enabled) return null
   if (pathname.startsWith('/assistant')) return null
   if (isPanelOpen) return null
 

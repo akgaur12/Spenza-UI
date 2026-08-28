@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useRef, useState } from 'react'
 import { cancelMessage } from '@/features/assistant/api/chatApi'
 import type { ChatMessageListResponse, ChatStreamState, OptimisticChatMessage } from '@/features/assistant/types/chat.types'
+import { describeAssistantErrorCode } from '@/features/assistant/utils/error-messages'
 import { SSEBuffer } from '@/features/assistant/utils/sse-parser'
 import { API_ENDPOINTS, env } from '@/config'
 import { getErrorMessage } from '@/lib/errors'
@@ -24,10 +25,10 @@ function initialState(): ChatStreamState {
   }
 }
 
-async function readErrorMessage(response: Response): Promise<string> {
+async function readErrorResponse(response: Response): Promise<string> {
   try {
-    const body = (await response.clone().json()) as { message?: string }
-    return body.message ?? GENERIC_STREAM_ERROR
+    const body = (await response.clone().json()) as { message?: string; error_code?: string }
+    return describeAssistantErrorCode(body.error_code) ?? body.message ?? GENERIC_STREAM_ERROR
   } catch {
     return GENERIC_STREAM_ERROR
   }
@@ -68,6 +69,22 @@ export function useChatStreaming() {
         }
         return { ...data, pages }
       })
+
+      return optimisticMessage.id
+    },
+    [queryClient],
+  )
+
+  /** Rolls back the optimistic insert when the backend rejected the send before persisting anything (e.g. access disabled, a limit was hit). */
+  const removeOptimisticMessage = useCallback(
+    (chatId: string, messageId: string) => {
+      queryClient.setQueryData<InfiniteData<ChatMessageListResponse>>(assistantKeys.messages(chatId), (data) => {
+        if (!data) return data
+        return {
+          ...data,
+          pages: data.pages.map((page) => ({ ...page, items: page.items.filter((item) => item.id !== messageId) })),
+        }
+      })
     },
     [queryClient],
   )
@@ -91,7 +108,7 @@ export function useChatStreaming() {
       abortRef.current = controller
 
       setState({ ...initialState(), isStreaming: true, activeChatId: chatId, lastMessageText: trimmed })
-      insertOptimisticUserMessage(chatId, trimmed)
+      const optimisticMessageId = insertOptimisticUserMessage(chatId, trimmed)
 
       try {
         const response = await fetch(`${env.apiUrl}${API_ENDPOINTS.chats.messages(chatId)}`, {
@@ -103,7 +120,8 @@ export function useChatStreaming() {
         })
 
         if (!response.ok || !response.body) {
-          const description = await readErrorMessage(response)
+          const description = await readErrorResponse(response)
+          removeOptimisticMessage(chatId, optimisticMessageId)
           setState((current) => ({ ...current, isStreaming: false, error: description }))
           return
         }
@@ -178,7 +196,7 @@ export function useChatStreaming() {
         setState((current) => ({ ...current, isStreaming: false, error: getErrorMessage(error, GENERIC_STREAM_ERROR) }))
       }
     },
-    [insertOptimisticUserMessage, settle],
+    [insertOptimisticUserMessage, removeOptimisticMessage, settle],
   )
 
   const cancel = useCallback(async () => {

@@ -1,8 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { deleteAdminUser, setUserActive, unlockUser, updateUserRole } from '@/features/admin/api/admin-users.api'
+import {
+  deleteAdminUser,
+  setUserActive,
+  unlockUser,
+  updateUserAiAssistantPermission,
+  updateUserRole,
+} from '@/features/admin/api/admin-users.api'
 import { adminKeys } from '@/features/admin/hooks/query-keys'
-import type { SetUserActiveRequest, UpdateUserRoleRequest } from '@/features/admin/types'
+import type { AIAssistantPermissionUpdate, SetUserActiveRequest, UpdateUserRoleRequest } from '@/features/admin/types'
 import { getErrorCode, getErrorMessage } from '@/lib/errors'
 
 function ownAccountErrorMessage(error: unknown, fallback: string): string {
@@ -57,6 +63,21 @@ export function useUpdateUserRoleMutation() {
           ? "This is the only remaining admin — promote someone else first."
           : getErrorMessage(error)
       toast.error('Could not update role', { description })
+    },
+  })
+}
+
+export function useUpdateAiAssistantPermissionMutation() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (variables: { userId: string; payload: AIAssistantPermissionUpdate }) =>
+      updateUserAiAssistantPermission(variables.userId, variables.payload),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: adminKeys.userAiAssistant(variables.userId) })
+      toast.success('AI assistant access updated')
+    },
+    onError: (error) => {
+      toast.error('Could not update AI assistant access', { description: getErrorMessage(error) })
     },
   })
 }

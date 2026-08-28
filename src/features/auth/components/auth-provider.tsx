@@ -1,12 +1,12 @@
 import { createContext, use, useEffect, type ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useMe } from '@/features/auth/hooks/use-me'
-import type { UserMe } from '@/features/auth/types'
+import type { UserMeResponse } from '@/features/auth/types'
 import { AUTH_LOGOUT_EVENT } from '@/services/api-client'
 import { authKeys } from '@/features/auth/hooks/query-keys'
 
 interface AuthContextValue {
-  user: UserMe | null
+  user: UserMeResponse | null
   isAuthenticated: boolean
   isLoading: boolean
 }

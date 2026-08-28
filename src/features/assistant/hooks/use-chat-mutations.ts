@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { createChat, deleteChat, renameChat } from '@/features/assistant/api/chatApi'
 import type { ChatCreateRequest } from '@/features/assistant/types/chat.types'
-import { getErrorMessage } from '@/lib/errors'
+import { describeAssistantErrorCode } from '@/features/assistant/utils/error-messages'
+import { getErrorCode, getErrorMessage } from '@/lib/errors'
 import { assistantKeys } from './query-keys'
 
 export function useCreateChat() {
@@ -14,7 +15,8 @@ export function useCreateChat() {
       queryClient.invalidateQueries({ queryKey: assistantKeys.all })
     },
     onError: (error) => {
-      toast.error('Could not start a new chat', { description: getErrorMessage(error) })
+      const description = describeAssistantErrorCode(getErrorCode(error)) ?? getErrorMessage(error)
+      toast.error('Could not start a new chat', { description })
     },
   })
 }

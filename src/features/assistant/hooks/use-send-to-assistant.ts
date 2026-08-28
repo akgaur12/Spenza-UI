@@ -11,9 +11,14 @@ export function useSendToAssistant() {
     async (text: string) => {
       let chatId = activeChatId
       if (!chatId) {
-        const chat = await createChat.mutateAsync({})
-        chatId = chat.id
-        setActiveChatId(chatId)
+        try {
+          const chat = await createChat.mutateAsync({})
+          chatId = chat.id
+          setActiveChatId(chatId)
+        } catch {
+          // useCreateChat's onError already surfaced a toast — nothing more to do here.
+          return
+        }
       }
       void streaming.sendMessage(chatId, text)
     },

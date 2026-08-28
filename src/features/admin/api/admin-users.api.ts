@@ -2,6 +2,8 @@ import { API_ENDPOINTS } from '@/config'
 import type {
   AdminUserResponse,
   AdminUsersListParams,
+  AIAssistantPermissionResponse,
+  AIAssistantPermissionUpdate,
   PaginatedUsersResponse,
   RevokedSessionsResponse,
   SessionListResponse,
@@ -55,5 +57,23 @@ export async function listUserSessions(userId: string): Promise<SessionListRespo
 
 export async function revokeUserSessions(userId: string): Promise<RevokedSessionsResponse> {
   const { data } = await apiClient.delete<ApiSuccessResponse<RevokedSessionsResponse>>(endpoints.userSessions(userId))
+  return data.data
+}
+
+export async function getUserAiAssistantPermission(userId: string): Promise<AIAssistantPermissionResponse> {
+  const { data } = await apiClient.get<ApiSuccessResponse<AIAssistantPermissionResponse>>(
+    endpoints.userAiAssistant(userId),
+  )
+  return data.data
+}
+
+export async function updateUserAiAssistantPermission(
+  userId: string,
+  payload: AIAssistantPermissionUpdate,
+): Promise<AIAssistantPermissionResponse> {
+  const { data } = await apiClient.patch<ApiSuccessResponse<AIAssistantPermissionResponse>>(
+    endpoints.userAiAssistant(userId),
+    payload,
+  )
   return data.data
 }

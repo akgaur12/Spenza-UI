@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AdminPagination } from '@/features/admin/components/admin-pagination'
 import { SendAdminEmailDialog } from '@/features/admin/components/email-tab/send-admin-email-dialog'
 import { BroadcastDialog } from '@/features/admin/components/notifications-tab/broadcast-dialog'
+import { AiAssistantAccessDialog } from '@/features/admin/components/users-tab/ai-assistant-access-dialog'
 import { ChangeRoleDialog } from '@/features/admin/components/users-tab/change-role-dialog'
 import { DeleteUserDialog } from '@/features/admin/components/users-tab/delete-user-dialog'
 import { UnlockUserDialog } from '@/features/admin/components/users-tab/unlock-user-dialog'
@@ -24,6 +25,7 @@ export function UsersTab() {
   const [sessionsTarget, setSessionsTarget] = useState<AdminUserResponse | null>(null)
   const [notifyTarget, setNotifyTarget] = useState<AdminUserResponse | null>(null)
   const [emailTarget, setEmailTarget] = useState<AdminUserResponse | null>(null)
+  const [aiAssistantTarget, setAiAssistantTarget] = useState<AdminUserResponse | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<AdminUserResponse | null>(null)
 
   const { data, isLoading } = useAdminUsers({ page, page_size: PAGE_SIZE })
@@ -55,6 +57,7 @@ export function UsersTab() {
           onViewSessions={setSessionsTarget}
           onNotify={setNotifyTarget}
           onSendEmail={setEmailTarget}
+          onManageAiAssistant={setAiAssistantTarget}
           onDelete={setDeleteTarget}
         />
       )}
@@ -76,6 +79,7 @@ export function UsersTab() {
         onOpenChange={(open) => !open && setEmailTarget(null)}
         targetUser={emailTarget}
       />
+      <AiAssistantAccessDialog user={aiAssistantTarget} onOpenChange={(open) => !open && setAiAssistantTarget(null)} />
       <DeleteUserDialog user={deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)} />
     </div>
   )
