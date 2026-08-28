@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { AdminNavigation } from '@/features/admin/components/admin-navigation'
+import { AiAssistantTab } from '@/features/admin/components/ai-assistant-tab/ai-assistant-tab'
 import { CategoriesTab } from '@/features/admin/components/categories-tab/categories-tab'
 import { EmailTab } from '@/features/admin/components/email-tab/email-tab'
 import { NotificationsTab } from '@/features/admin/components/notifications-tab/notifications-tab'
@@ -25,6 +26,9 @@ export function AdminPage() {
             </TabsContent>
             <TabsContent value="users" className="mt-0">
               <UsersTab />
+            </TabsContent>
+            <TabsContent value="ai-assistant" className="mt-0">
+              <AiAssistantTab />
             </TabsContent>
             <TabsContent value="categories" className="mt-0">
               <CategoriesTab />

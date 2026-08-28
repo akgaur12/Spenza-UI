@@ -1,6 +1,9 @@
+import type { TrendInterval } from '@/features/analytics/types'
+import type { LLMProvider } from '@/features/assistant/types/chat.types'
+
 export type UserRole = 'user' | 'admin'
 
-export type AdminSectionKey = 'overview' | 'users' | 'categories' | 'notifications' | 'email'
+export type AdminSectionKey = 'overview' | 'users' | 'ai-assistant' | 'categories' | 'notifications' | 'email'
 
 export interface AdminUserResponse {
   id: string
@@ -74,6 +77,125 @@ export interface AIAssistantPermissionUpdate {
   max_messages_per_month?: number | null
   max_new_chats_per_day?: number | null
   max_new_chats_per_month?: number | null
+}
+
+export interface AIAssistantRunStatusCounts {
+  queued: number
+  running: number
+  completed: number
+  failed: number
+  cancelled: number
+}
+
+export interface AIAssistantOverviewParams {
+  /** Scopes every count to a single user instead of system-wide totals. */
+  user_id?: string
+}
+
+/** System-wide totals (or one user's, when `user_id` is passed) — powers the observability page's stat cards. */
+export interface AIAssistantOverview {
+  total_chats: number
+  total_messages_sent: number
+  total_runs: number
+  runs_by_status: AIAssistantRunStatusCounts
+  runs_last_7_days: number
+  runs_last_30_days: number
+  messages_sent_last_7_days: number
+  messages_sent_last_30_days: number
+  active_users_last_7_days: number
+  active_users_last_30_days: number
+  users_with_access_enabled: number
+  total_input_tokens: number | null
+  total_output_tokens: number | null
+  total_tool_calls: number
+  average_latency_ms: number | null
+  total_estimated_cost_usd: string | null
+}
+
+export interface AIAssistantProviderUsage {
+  provider: LLMProvider
+  model: string
+  total_runs: number
+  completed: number
+  failed: number
+  cancelled: number
+  input_tokens: number | null
+  output_tokens: number | null
+  tool_calls: number
+  average_latency_ms: number | null
+  estimated_cost_usd: string | null
+}
+
+export interface AIAssistantProviderUsageResponse {
+  start_date: string
+  end_date: string
+  total_estimated_cost_usd: string | null
+  providers: AIAssistantProviderUsage[]
+}
+
+export interface AIAssistantProviderUsageParams {
+  start_date?: string
+  end_date?: string
+  user_id?: string
+}
+
+export interface AIAssistantUsageBucket {
+  period: string
+  start_date: string
+  end_date: string | null
+  messages_sent: number
+  runs_completed: number
+  runs_failed: number
+  runs_cancelled: number
+  input_tokens: number | null
+  output_tokens: number | null
+  tool_calls: number
+  estimated_cost_usd: string | null
+}
+
+export interface AIAssistantUsageTimeseries {
+  interval: TrendInterval
+  start_date: string
+  end_date: string
+  data: AIAssistantUsageBucket[]
+}
+
+export interface AIAssistantUsageTimeseriesParams {
+  interval?: TrendInterval
+  start_date?: string
+  end_date?: string
+  user_id?: string
+}
+
+export type AIAssistantUserSortBy = 'messages_sent' | 'chats_created' | 'last_active'
+export type SortOrder = 'asc' | 'desc'
+
+/** Only users who have used the assistant at least once — a fresh account with no history won't appear. */
+export interface AIAssistantUserUsage {
+  user_id: string
+  username: string
+  email: string
+  enabled: boolean
+  total_chats: number
+  total_messages_sent: number
+  messages_sent_last_30_days: number
+  last_active_at: string | null
+  estimated_cost_usd: string | null
+}
+
+export interface AIAssistantUserUsageListResponse {
+  items: AIAssistantUserUsage[]
+  total: number
+  page: number
+  page_size: number
+}
+
+export interface AIAssistantUserUsageParams {
+  page: number
+  page_size: number
+  sort_by?: AIAssistantUserSortBy
+  order?: SortOrder
+  user_id?: string
 }
 
 export type { CategoryResponse as SystemCategoryResponse } from '@/features/categories/types'

@@ -1,4 +1,4 @@
-import { Outlet } from '@tanstack/react-router'
+import { Outlet, useLocation } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { AppContainer } from '@/components/layout/app-container'
 import { ContentContainer } from '@/components/layout/content-container'
@@ -14,6 +14,8 @@ import { useMediaQuery } from '@/hooks/use-media-query'
 export function AppLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const { pathname } = useLocation()
+  const isAdminRoute = pathname.startsWith('/admin')
 
   useEffect(() => {
     if (isDesktop) setDrawerOpen(false)
@@ -28,7 +30,7 @@ export function AppLayout() {
 
             <div className="scrollbar-thin flex min-w-0 flex-1 flex-col overflow-y-auto">
               <Topbar onOpenDrawer={() => setDrawerOpen(true)} />
-              <ContentContainer>
+              <ContentContainer wide={isAdminRoute}>
                 <Outlet />
               </ContentContainer>
             </div>

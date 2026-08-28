@@ -46,7 +46,7 @@ export function ChartWrapper({
         <CardTitle className={cn(compactHeader && 'shrink-0')}>{title}</CardTitle>
         {action}
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-1 flex-col">
         {isPending ? (
           skeleton
         ) : isError ? (

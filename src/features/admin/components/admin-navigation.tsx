@@ -1,4 +1,4 @@
-import { LayoutDashboard, Mail, Send, Tag, Users } from 'lucide-react'
+import { LayoutDashboard, Mail, Send, Sparkles, Tag, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { AdminSectionKey } from '@/features/admin/types'
@@ -6,6 +6,7 @@ import type { AdminSectionKey } from '@/features/admin/types'
 export const ADMIN_SECTIONS: { value: AdminSectionKey; label: string; icon: LucideIcon }[] = [
   { value: 'overview', label: 'Overview', icon: LayoutDashboard },
   { value: 'users', label: 'Users', icon: Users },
+  { value: 'ai-assistant', label: 'AI Assistant', icon: Sparkles },
   { value: 'categories', label: 'Categories', icon: Tag },
   { value: 'notifications', label: 'Notifications', icon: Send },
   { value: 'email', label: 'Email', icon: Mail },

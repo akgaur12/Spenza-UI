@@ -37,52 +37,19 @@ export function UsersTable({
   const setActiveMutation = useSetUserActiveMutation()
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>User</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>AI Assistant</TableHead>
-          <TableHead>Created</TableHead>
-          <TableHead className="w-0">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+    <>
+      <div className="space-y-3 md:hidden">
         {users.map((user) => {
           const isOwnAccount = user.id === currentUserId
           const locked = isLocked(user)
 
           return (
-            <TableRow key={user.id}>
-              <TableCell>
-                <div className="flex flex-col">
-                  <span className="font-medium text-foreground">{user.full_name || user.username}</span>
-                  <span className="text-xs text-muted-foreground">{user.email}</span>
+            <div key={user.id} className="rounded-lg border border-border p-4">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-foreground">{user.full_name || user.username}</p>
+                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                 </div>
-              </TableCell>
-              <TableCell>
-                <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>{user.role}</Badge>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <span title={isOwnAccount ? "You can't deactivate your own account" : undefined}>
-                    <Switch
-                      checked={user.is_active}
-                      disabled={isOwnAccount || setActiveMutation.isPending}
-                      onCheckedChange={(checked) =>
-                        setActiveMutation.mutate({ userId: user.id, payload: { is_active: checked } })
-                      }
-                    />
-                  </span>
-                  {locked && <Badge variant="destructive">Locked</Badge>}
-                </div>
-              </TableCell>
-              <TableCell>
-                <AiAssistantStatusBadge userId={user.id} onClick={() => onManageAiAssistant(user)} />
-              </TableCell>
-              <TableCell className="text-muted-foreground">{formatExpenseTableDate(user.created_at)}</TableCell>
-              <TableCell>
                 <UserRowActions
                   role={user.role}
                   isOwnAccount={isOwnAccount}
@@ -95,11 +62,96 @@ export function UsersTable({
                   onManageAiAssistant={() => onManageAiAssistant(user)}
                   onDelete={() => onDelete(user)}
                 />
-              </TableCell>
-            </TableRow>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>{user.role}</Badge>
+                {locked && <Badge variant="destructive">Locked</Badge>}
+                <AiAssistantStatusBadge userId={user.id} onClick={() => onManageAiAssistant(user)} />
+                <span className="text-xs text-muted-foreground">Joined {formatExpenseTableDate(user.created_at)}</span>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
+                <span className="text-sm text-muted-foreground" title={isOwnAccount ? "You can't deactivate your own account" : undefined}>
+                  {user.is_active ? 'Active' : 'Inactive'}
+                </span>
+                <Switch
+                  checked={user.is_active}
+                  disabled={isOwnAccount || setActiveMutation.isPending}
+                  onCheckedChange={(checked) =>
+                    setActiveMutation.mutate({ userId: user.id, payload: { is_active: checked } })
+                  }
+                />
+              </div>
+            </div>
           )
         })}
-      </TableBody>
-    </Table>
+      </div>
+
+      <Table containerClassName="hidden md:block">
+        <TableHeader>
+          <TableRow>
+            <TableHead>User</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>AI Assistant</TableHead>
+            <TableHead>Created</TableHead>
+            <TableHead className="w-0">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.map((user) => {
+            const isOwnAccount = user.id === currentUserId
+            const locked = isLocked(user)
+
+            return (
+              <TableRow key={user.id}>
+                <TableCell>
+                  <div className="flex flex-col">
+                    <span className="font-medium text-foreground">{user.full_name || user.username}</span>
+                    <span className="text-xs text-muted-foreground">{user.email}</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>{user.role}</Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span title={isOwnAccount ? "You can't deactivate your own account" : undefined}>
+                      <Switch
+                        checked={user.is_active}
+                        disabled={isOwnAccount || setActiveMutation.isPending}
+                        onCheckedChange={(checked) =>
+                          setActiveMutation.mutate({ userId: user.id, payload: { is_active: checked } })
+                        }
+                      />
+                    </span>
+                    {locked && <Badge variant="destructive">Locked</Badge>}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <AiAssistantStatusBadge userId={user.id} onClick={() => onManageAiAssistant(user)} />
+                </TableCell>
+                <TableCell className="text-muted-foreground">{formatExpenseTableDate(user.created_at)}</TableCell>
+                <TableCell>
+                  <UserRowActions
+                    role={user.role}
+                    isOwnAccount={isOwnAccount}
+                    isLocked={locked}
+                    onUnlock={() => onUnlock(user)}
+                    onChangeRole={() => onChangeRole(user)}
+                    onViewSessions={() => onViewSessions(user)}
+                    onNotify={() => onNotify(user)}
+                    onSendEmail={() => onSendEmail(user)}
+                    onManageAiAssistant={() => onManageAiAssistant(user)}
+                    onDelete={() => onDelete(user)}
+                  />
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+    </>
   )
 }

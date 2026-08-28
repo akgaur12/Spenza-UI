@@ -18,15 +18,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAdminStatsOverview } from '@/features/admin/hooks/use-admin-stats'
 import { SummaryCard } from '@/features/overview/components/summary-card'
+import { cn } from '@/lib/utils'
 
 function StatSection({
   title,
   description,
   children,
+  wideColumns = true,
 }: {
   title: string
   description: string
   children: ReactNode
+  /** false keeps each card's width matched to a full-width section's cards, instead of stretching to fill this (narrower, paired) section. */
+  wideColumns?: boolean
 }) {
   return (
     <Card>
@@ -35,7 +39,7 @@ function StatSection({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{children}</div>
+        <div className={cn('grid grid-cols-2 gap-3', wideColumns && 'sm:grid-cols-4')}>{children}</div>
       </CardContent>
     </Card>
   )
@@ -81,30 +85,34 @@ export function OverviewTab() {
         <SummaryCard title="Signups (30d)" icon={UserPlus} amount={users.signups_last_30_days.toLocaleString()} />
       </StatSection>
 
-      <StatSection title="Expenses" description="Spending activity logged across every account">
-        <SummaryCard title="Total Expenses" icon={Receipt} amount={expenses.total_count.toLocaleString()} />
-        <SummaryCard title="Created (30d)" icon={CalendarDays} amount={expenses.created_last_30_days.toLocaleString()} />
-      </StatSection>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <StatSection title="Expenses" description="Spending activity logged across every account" wideColumns={false}>
+          <SummaryCard title="Total Expenses" icon={Receipt} amount={expenses.total_count.toLocaleString()} />
+          <SummaryCard title="Created (30d)" icon={CalendarDays} amount={expenses.created_last_30_days.toLocaleString()} />
+        </StatSection>
 
-      <StatSection title="Recurring Expenses" description="Scheduled expenses currently on file">
-        <SummaryCard title="Total" icon={Repeat} amount={recurring_expenses.total.toLocaleString()} />
-        <SummaryCard title="Active" icon={Repeat} amount={recurring_expenses.active.toLocaleString()} tone="success" />
-      </StatSection>
+        <StatSection title="Recurring Expenses" description="Scheduled expenses currently on file" wideColumns={false}>
+          <SummaryCard title="Total" icon={Repeat} amount={recurring_expenses.total.toLocaleString()} />
+          <SummaryCard title="Active" icon={Repeat} amount={recurring_expenses.active.toLocaleString()} tone="success" />
+        </StatSection>
+      </div>
 
-      <StatSection title="Categories" description="System defaults vs. user-created categories">
-        <SummaryCard title="System" icon={Tag} amount={categories.system_count.toLocaleString()} />
-        <SummaryCard title="Custom" icon={Layers} amount={categories.custom_count.toLocaleString()} />
-      </StatSection>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <StatSection title="Categories" description="System defaults vs. user-created categories" wideColumns={false}>
+          <SummaryCard title="System" icon={Tag} amount={categories.system_count.toLocaleString()} />
+          <SummaryCard title="Custom" icon={Layers} amount={categories.custom_count.toLocaleString()} />
+        </StatSection>
 
-      <StatSection title="Notifications" description="Delivery volume and recent failures">
-        <SummaryCard title="Total Sent" icon={Bell} amount={notifications.total_sent.toLocaleString()} tone="success" />
-        <SummaryCard
-          title="Failures (7d)"
-          icon={AlertTriangle}
-          amount={notifications.delivery_failures_last_7_days.toLocaleString()}
-          tone={hasDeliveryFailures ? 'destructive' : 'success'}
-        />
-      </StatSection>
+        <StatSection title="Notifications" description="Delivery volume and recent failures" wideColumns={false}>
+          <SummaryCard title="Total Sent" icon={Bell} amount={notifications.total_sent.toLocaleString()} tone="success" />
+          <SummaryCard
+            title="Failures (7d)"
+            icon={AlertTriangle}
+            amount={notifications.delivery_failures_last_7_days.toLocaleString()}
+            tone={hasDeliveryFailures ? 'destructive' : 'success'}
+          />
+        </StatSection>
+      </div>
     </div>
   )
 }
