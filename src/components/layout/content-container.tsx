@@ -6,7 +6,7 @@ export function ContentContainer({ children, wide }: { children: ReactNode; wide
     <main
       className={cn(
         'mx-auto w-full flex-1 px-4 py-6 pb-24 sm:px-6 md:pb-6 lg:px-8',
-        wide ? 'max-w-[1600px]' : 'max-w-6xl',
+        wide ? 'max-w-[1400px]' : 'max-w-6xl',
       )}
     >
       {children}

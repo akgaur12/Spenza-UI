@@ -1,8 +1,8 @@
 import type { InfiniteData } from '@tanstack/react-query'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useRef, useState } from 'react'
-import { cancelMessage } from '@/features/assistant/api/chatApi'
-import type { ChatMessageListResponse, ChatStreamState, OptimisticChatMessage } from '@/features/assistant/types/chat.types'
+import { cancelMessage, getChat } from '@/features/assistant/api/chatApi'
+import type { Chat, ChatMessageListResponse, ChatStreamState, OptimisticChatMessage } from '@/features/assistant/types/chat.types'
 import { describeAssistantErrorCode } from '@/features/assistant/utils/error-messages'
 import { SSEBuffer } from '@/features/assistant/utils/sse-parser'
 import { API_ENDPOINTS, env } from '@/config'
@@ -10,6 +10,14 @@ import { getErrorMessage } from '@/lib/errors'
 import { assistantKeys } from './query-keys'
 
 const GENERIC_STREAM_ERROR = 'Something went wrong while generating the response.'
+
+/**
+ * The backend generates a chat's title asynchronously (a background LLM call) after the
+ * first run completes, so the immediate post-run refetch below often still sees the old
+ * placeholder title. Poll a few times over ~10s and resync every cached view once the
+ * title actually changes, instead of leaving it stale until the user reloads the page.
+ */
+const TITLE_POLL_DELAYS_MS = [1500, 2500, 4000, 4000]
 
 function initialState(): ChatStreamState {
   return {
@@ -89,14 +97,37 @@ export function useChatStreaming() {
     [queryClient],
   )
 
+  /** Retries a few times over ~12s until the title differs from what it was before this run, then resyncs every cached view. */
+  const pollForTitleUpdate = useCallback(
+    async (chatId: string, titleBeforeSend: string | undefined) => {
+      for (const delay of TITLE_POLL_DELAYS_MS) {
+        await new Promise((resolve) => setTimeout(resolve, delay))
+        try {
+          const chat = await getChat(chatId)
+          if (chat.title !== titleBeforeSend) {
+            // Scoped to title-bearing queries only — never messages/messagesMeta, which
+            // would race a message the user might already be sending in this chat by now.
+            queryClient.invalidateQueries({ queryKey: assistantKeys.chats() })
+            queryClient.invalidateQueries({ queryKey: assistantKeys.chat(chatId) })
+            return
+          }
+        } catch {
+          return
+        }
+      }
+    },
+    [queryClient],
+  )
+
   const settle = useCallback(
-    (chatId: string) => {
+    (chatId: string, titleBeforeSend?: string) => {
       queryClient.invalidateQueries({ queryKey: assistantKeys.messages(chatId) })
       queryClient.invalidateQueries({ queryKey: assistantKeys.messagesMeta(chatId) })
       queryClient.invalidateQueries({ queryKey: assistantKeys.chats() })
       queryClient.invalidateQueries({ queryKey: assistantKeys.chat(chatId) })
+      if (titleBeforeSend !== undefined) void pollForTitleUpdate(chatId, titleBeforeSend)
     },
-    [queryClient],
+    [queryClient, pollForTitleUpdate],
   )
 
   const sendMessage = useCallback(
@@ -106,6 +137,8 @@ export function useChatStreaming() {
 
       const controller = new AbortController()
       abortRef.current = controller
+
+      const titleBeforeSend = queryClient.getQueryData<Chat>(assistantKeys.chat(chatId))?.title
 
       setState({ ...initialState(), isStreaming: true, activeChatId: chatId, lastMessageText: trimmed })
       const optimisticMessageId = insertOptimisticUserMessage(chatId, trimmed)
@@ -168,7 +201,7 @@ export function useChatStreaming() {
               case 'run_completed':
                 reachedTerminalEvent = true
                 setState((current) => ({ ...current, isStreaming: false }))
-                settle(chatId)
+                settle(chatId, titleBeforeSend)
                 break
               case 'run_failed':
                 reachedTerminalEvent = true
@@ -196,7 +229,7 @@ export function useChatStreaming() {
         setState((current) => ({ ...current, isStreaming: false, error: getErrorMessage(error, GENERIC_STREAM_ERROR) }))
       }
     },
-    [insertOptimisticUserMessage, removeOptimisticMessage, settle],
+    [insertOptimisticUserMessage, removeOptimisticMessage, settle, queryClient],
   )
 
   const cancel = useCallback(async () => {

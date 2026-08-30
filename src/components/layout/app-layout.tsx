@@ -15,7 +15,7 @@ export function AppLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { pathname } = useLocation()
-  const isAdminRoute = pathname.startsWith('/admin')
+  const isWideRoute = pathname.startsWith('/admin') || pathname.startsWith('/settings')
 
   useEffect(() => {
     if (isDesktop) setDrawerOpen(false)
@@ -30,7 +30,7 @@ export function AppLayout() {
 
             <div className="scrollbar-thin flex min-w-0 flex-1 flex-col overflow-y-auto">
               <Topbar onOpenDrawer={() => setDrawerOpen(true)} />
-              <ContentContainer wide={isAdminRoute}>
+              <ContentContainer wide={isWideRoute}>
                 <Outlet />
               </ContentContainer>
             </div>

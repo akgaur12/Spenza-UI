@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { LoadingButton } from '@/components/common/loading-button'
 import { ProfileAvatar } from '@/components/layout/profile-avatar'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
 import type { UserMe } from '@/features/auth/types'
 import { EditableField } from '@/features/settings/components/editable-field'
@@ -86,8 +86,7 @@ export function ProfileCard({ user, onDirtyChange }: ProfileCardProps) {
                 )
               }
             />
-          </CardContent>
-          <CardFooter>
+
             <LoadingButton
               type="submit"
               isLoading={isSaving}
@@ -96,7 +95,7 @@ export function ProfileCard({ user, onDirtyChange }: ProfileCardProps) {
             >
               Save Changes
             </LoadingButton>
-          </CardFooter>
+          </CardContent>
         </form>
       </Form>
     </Card>

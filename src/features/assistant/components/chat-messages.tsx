@@ -82,13 +82,29 @@ export function ChatMessages({ chatId, onSelectPrompt, compactEmptyState }: Chat
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-6">
           {messagesQuery.isFetchingPreviousPage && <p className="text-center text-xs text-muted-foreground">Loading older messages...</p>}
 
-          {messages.map((message) =>
-            message.role === 'assistant' ? (
-              <AssistantMessage key={message.id} content={message.content} />
+          {messages.map((message) => {
+            // The backend can create this run's assistant row (and return it from a GET) before the generated
+            // text is written back to it — a mount-time fetch for a brand-new chat, or the post-completion
+            // refetch below, can both land in that gap. Identify "this run's" row by message id (set from the
+            // `message_started` SSE event) rather than position, since a fresh chat's list can include it from
+            // the very first fetch.
+            const isActiveLiveMessage = isLive && message.role === 'assistant' && message.id === streaming.state.activeMessageId
+
+            // While the live bubble below is showing (streaming, or its post-completion refetch is still in
+            // flight), let it own the rendering entirely — otherwise this static, still-empty row would flash
+            // "No response generated." next to (or instead of) the smoothly streaming content.
+            if (isActiveLiveMessage && showLiveBubble) return null
+
+            // Once the live bubble hands off, fall back to what we already streamed if the persisted content
+            // hasn't caught up yet, instead of showing "No response generated." for an answer we already have.
+            const content = isActiveLiveMessage && !message.content && streaming.state.streamingContent ? streaming.state.streamingContent : message.content
+
+            return message.role === 'assistant' ? (
+              <AssistantMessage key={message.id} content={content} />
             ) : message.role === 'user' ? (
               <UserMessage key={message.id} content={message.content} isPending={message.isPending} />
-            ) : null,
-          )}
+            ) : null
+          })}
 
           {showLiveBubble && (
             <div className="space-y-2">

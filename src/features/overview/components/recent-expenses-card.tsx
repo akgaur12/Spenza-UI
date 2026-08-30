@@ -1,10 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { MoreVertical, Pencil, Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
 import { SectionError } from '@/components/common/section-error'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useExpenses } from '@/features/expenses/hooks/use-expenses'
 import { RecentExpensesSkeleton } from '@/features/overview/components/recent-expenses-skeleton'
 import { formatCurrency, formatExpenseDate } from '@/lib/format'
@@ -29,7 +26,7 @@ export function RecentExpensesCard() {
             {expensesQuery.data.items.map((expense) => (
               <li
                 key={expense.id}
-                className="group flex items-center gap-3 px-6 py-3 transition-colors hover:bg-accent/40 sm:px-0"
+                className="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-accent/40 sm:px-0"
               >
                 <span
                   className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-lg"
@@ -45,30 +42,6 @@ export function RecentExpensesCard() {
                   <span className="text-sm font-semibold tabular-nums">{formatCurrency(expense.amount)}</span>
                   <span className="text-xs text-muted-foreground">{formatExpenseDate(expense.spent_at)}</span>
                 </div>
-
-                {/* Actions sit behind a persistent menu button on all breakpoints */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      className="shrink-0"
-                      aria-label={`Actions for ${expense.description}`}
-                    >
-                      <MoreVertical className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onSelect={() => toast('Editing expenses is coming soon')}>
-                      <Pencil />
-                      Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem variant="destructive" onSelect={() => toast('Deleting expenses is coming soon')}>
-                      <Trash2 />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </li>
             ))}
           </ul>

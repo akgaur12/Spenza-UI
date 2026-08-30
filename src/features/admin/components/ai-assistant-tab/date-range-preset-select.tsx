@@ -1,7 +1,7 @@
 import { format, subDays } from 'date-fns'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-export type DateRangePreset = '7' | '30' | '90' | 'all'
+export type DateRangePreset = 'today' | '7' | '30' | '90' | 'all'
 
 export interface DateRangeParams {
   start_date?: string
@@ -10,6 +10,10 @@ export interface DateRangeParams {
 
 export function presetToDateRange(preset: DateRangePreset): DateRangeParams {
   if (preset === 'all') return {}
+  if (preset === 'today') {
+    const today = format(new Date(), 'yyyy-MM-dd')
+    return { start_date: today, end_date: today }
+  }
   const days = Number(preset)
   return {
     start_date: format(subDays(new Date(), days - 1), 'yyyy-MM-dd'),
@@ -29,6 +33,7 @@ export function DateRangePresetSelect({ value, onChange }: DateRangePresetSelect
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem value="today">Today</SelectItem>
         <SelectItem value="7">Last 7 days</SelectItem>
         <SelectItem value="30">Last 30 days</SelectItem>
         <SelectItem value="90">Last 90 days</SelectItem>
