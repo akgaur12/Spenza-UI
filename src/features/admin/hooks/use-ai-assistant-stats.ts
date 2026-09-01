@@ -1,5 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import {
+  getAiAssistantLogs,
   getAiAssistantOverview,
   getAiAssistantProviderUsage,
   getAiAssistantUsageTimeseries,
@@ -7,6 +8,7 @@ import {
 } from '@/features/admin/api/admin-ai-assistant-stats.api'
 import { adminKeys } from '@/features/admin/hooks/query-keys'
 import type {
+  AIAssistantLogsParams,
   AIAssistantOverviewParams,
   AIAssistantProviderUsageParams,
   AIAssistantUsageTimeseriesParams,
@@ -44,6 +46,15 @@ export function useAiAssistantUserUsage(params: AIAssistantUserUsageParams) {
   return useQuery({
     queryKey: adminKeys.aiAssistantUsers(params),
     queryFn: () => getAiAssistantUserUsage(params),
+    staleTime: 30 * 1000,
+    placeholderData: keepPreviousData,
+  })
+}
+
+export function useAiAssistantLogs(params: AIAssistantLogsParams) {
+  return useQuery({
+    queryKey: adminKeys.aiAssistantLogs(params),
+    queryFn: () => getAiAssistantLogs(params),
     staleTime: 30 * 1000,
     placeholderData: keepPreviousData,
   })

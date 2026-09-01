@@ -1,5 +1,7 @@
 import { API_ENDPOINTS } from '@/config'
 import type {
+  AIAssistantLogsParams,
+  AIAssistantMessageLogListResponse,
   AIAssistantOverview,
   AIAssistantOverviewParams,
   AIAssistantProviderUsageParams,
@@ -48,5 +50,12 @@ export async function getAiAssistantUserUsage(
     endpoints.aiAssistantUsers,
     { params },
   )
+  return data.data
+}
+
+export async function getAiAssistantLogs(params: AIAssistantLogsParams): Promise<AIAssistantMessageLogListResponse> {
+  const { data } = await apiClient.get<ApiSuccessResponse<AIAssistantMessageLogListResponse>>(endpoints.aiAssistantLogs, {
+    params,
+  })
   return data.data
 }

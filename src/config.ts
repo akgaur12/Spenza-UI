@@ -57,6 +57,7 @@ export const API_ENDPOINTS = {
     aiAssistantProviders: '/api/v1/admin/ai-assistant/providers',
     aiAssistantUsageTimeseries: '/api/v1/admin/ai-assistant/usage/timeseries',
     aiAssistantUsers: '/api/v1/admin/ai-assistant/users',
+    aiAssistantLogs: '/api/v1/admin/ai-assistant/logs',
     categories: '/api/v1/admin/categories',
     category: (categoryId: string) => `/api/v1/admin/categories/${categoryId}`,
     notificationsBroadcast: '/api/v1/admin/notifications/broadcast',

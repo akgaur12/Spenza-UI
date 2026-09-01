@@ -198,6 +198,47 @@ export interface AIAssistantUserUsageParams {
   user_id?: string
 }
 
+export type ChatRunStatus = 'queued' | 'running' | 'completed' | 'failed' | 'cancelled'
+
+/** One agent run (one user message -> one assistant reply), for the admin log table. */
+export interface AIAssistantMessageLog {
+  run_id: string
+  chat_id: string
+  user_id: string
+  username: string
+  email: string
+  provider: LLMProvider
+  model: string
+  status: ChatRunStatus
+  input_message: string | null
+  output_message: string
+  input_tokens: number | null
+  output_tokens: number | null
+  total_tokens: number | null
+  tool_calls: number
+  latency_ms: number | null
+  estimated_cost_usd: string | null
+  error: string | null
+  created_at: string
+  started_at: string | null
+  completed_at: string | null
+}
+
+export interface AIAssistantMessageLogListResponse {
+  items: AIAssistantMessageLog[]
+  total: number
+  page: number
+  page_size: number
+}
+
+export interface AIAssistantLogsParams {
+  page: number
+  page_size: number
+  status?: ChatRunStatus
+  provider?: LLMProvider
+  user_id?: string
+}
+
 export type { CategoryResponse as SystemCategoryResponse } from '@/features/categories/types'
 
 export interface AdminCategoryListParams {

@@ -5,6 +5,7 @@ import {
   presetToDateRange,
   type DateRangePreset,
 } from '@/features/admin/components/ai-assistant-tab/date-range-preset-select'
+import { MessageLogsTable } from '@/features/admin/components/ai-assistant-tab/message-logs-table'
 import { ProviderUsageTable } from '@/features/admin/components/ai-assistant-tab/provider-usage-table'
 import { RunStatusChart } from '@/features/admin/components/ai-assistant-tab/run-status-chart'
 import { UsageTimeseriesChart } from '@/features/admin/components/ai-assistant-tab/usage-timeseries-chart'
@@ -41,6 +42,8 @@ export function AiAssistantTab() {
       <ProviderUsageTable userId={selectedUserId} dateRange={dateRange} />
 
       <UserUsageTable selectedUserId={selectedUserId} onSelectUser={setSelectedUserId} />
+
+      <MessageLogsTable userId={selectedUserId} />
     </div>
   )
 }

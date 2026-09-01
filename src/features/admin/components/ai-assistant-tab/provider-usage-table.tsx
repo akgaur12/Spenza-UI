@@ -1,23 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import type { DateRangeParams } from '@/features/admin/components/ai-assistant-tab/date-range-preset-select'
 import { formatUsd } from '@/features/admin/components/ai-assistant-tab/format-usd'
+import { formatLatency, PROVIDER_LABELS } from '@/features/admin/components/ai-assistant-tab/provider-format'
 import { useAiAssistantProviderUsage } from '@/features/admin/hooks/use-ai-assistant-stats'
 import { ChartWrapper } from '@/features/analytics/components/chart-wrapper'
-
-const PROVIDER_LABELS: Record<string, string> = {
-  ollama: 'Ollama',
-  aws_bedrock: 'AWS Bedrock',
-  groq: 'Groq',
-  nvidia: 'NVIDIA',
-  openai: 'OpenAI',
-  huggingface: 'Hugging Face',
-  open_router: 'OpenRouter',
-}
-
-function formatLatency(value: number | null): string {
-  if (value === null) return '—'
-  return value < 1000 ? `${Math.round(value)}ms` : `${(value / 1000).toFixed(1)}s`
-}
 
 interface ProviderUsageTableProps {
   userId: string | null

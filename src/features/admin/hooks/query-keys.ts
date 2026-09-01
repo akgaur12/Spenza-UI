@@ -1,6 +1,7 @@
 import type {
   AdminCategoryListParams,
   AdminUsersListParams,
+  AIAssistantLogsParams,
   AIAssistantOverviewParams,
   AIAssistantProviderUsageParams,
   AIAssistantUsageTimeseriesParams,
@@ -20,6 +21,7 @@ export const adminKeys = {
   aiAssistantUsageTimeseries: (params: AIAssistantUsageTimeseriesParams) =>
     [...adminKeys.all, 'ai-assistant', 'usage-timeseries', params] as const,
   aiAssistantUsers: (params: AIAssistantUserUsageParams) => [...adminKeys.all, 'ai-assistant', 'users', params] as const,
+  aiAssistantLogs: (params: AIAssistantLogsParams) => [...adminKeys.all, 'ai-assistant', 'logs', params] as const,
   categories: (params: AdminCategoryListParams) => [...adminKeys.all, 'categories', params] as const,
   deliveryLogs: (params: DeliveryLogListParams) => [...adminKeys.all, 'delivery-logs', params] as const,
   emailConfig: () => [...adminKeys.all, 'email-config'] as const,
