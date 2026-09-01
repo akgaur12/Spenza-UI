@@ -31,13 +31,15 @@ export function CategoryBreakdownCard() {
       <CardHeader>
         <CardTitle>Category Breakdown</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-1 flex-col">
         {categoryQuery.isPending ? (
           <CategorySkeleton />
         ) : categoryQuery.isError ? (
           <SectionError message="Unable to load category breakdown." onRetry={() => categoryQuery.refetch()} />
         ) : topCategories.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">No spending this month yet.</p>
+          <div className="flex flex-1 items-center justify-center py-8">
+            <p className="text-center text-sm text-muted-foreground">No spending this month yet.</p>
+          </div>
         ) : (
           <div className="flex flex-col items-center gap-6 sm:flex-row">
             <ResponsiveContainer width={donutSize} height={donutSize} className="shrink-0">

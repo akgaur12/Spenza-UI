@@ -55,7 +55,7 @@ function StepIndicator({ current }: { current: ImportWizardStep }) {
 
 export function ImportWizard() {
   const [currentStep, setCurrentStep] = useState<ImportWizardStep>('upload')
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<ImportPreviewResponse | null>(null)
   const [importPercent, setImportPercent] = useState(0)
 
@@ -76,7 +76,7 @@ export function ImportWizard() {
 
   function resetWizard() {
     setCurrentStep('upload')
-    setSelectedFileName(null)
+    setSelectedFile(null)
     setPreview(null)
     setImportPercent(0)
     previewMutation.reset()
@@ -84,12 +84,20 @@ export function ImportWizard() {
   }
 
   function handleFileSelected(file: File) {
-    setSelectedFileName(file.name)
+    setSelectedFile(file)
     setPreview(null)
     setCurrentStep('preview')
     previewMutation.mutate(file, {
       onSuccess: (data) => setPreview(data),
       onError: () => setCurrentStep('upload'),
+    })
+  }
+
+  /** Re-runs the preview against the same file — used after creating a category the file referenced but didn't exist yet, so those rows can re-validate without the user re-uploading. */
+  function handleRecheckFile() {
+    if (!selectedFile) return
+    previewMutation.mutate(selectedFile, {
+      onSuccess: (data) => setPreview(data),
     })
   }
 
@@ -128,7 +136,7 @@ export function ImportWizard() {
               onFileSelected={handleFileSelected}
               isUploading={previewMutation.isPending}
               uploadPercent={previewMutation.uploadPercent}
-              selectedFileName={selectedFileName}
+              selectedFileName={selectedFile?.name ?? null}
             />
           )}
 
@@ -147,11 +155,17 @@ export function ImportWizard() {
             ))}
 
           {currentStep === 'validate' && preview && (
-            <ValidationStep preview={preview} onImport={handleImport} onChooseDifferentFile={resetWizard} />
+            <ValidationStep
+              preview={preview}
+              onImport={handleImport}
+              onChooseDifferentFile={resetWizard}
+              onRecheckFile={handleRecheckFile}
+              isRechecking={previewMutation.isPending}
+            />
           )}
 
           {currentStep === 'import' && (
-            <ImportProgress percent={Math.min(100, Math.round(importPercent))} fileName={selectedFileName ?? ''} />
+            <ImportProgress percent={Math.min(100, Math.round(importPercent))} fileName={selectedFile?.name ?? ''} />
           )}
 
           {currentStep === 'complete' && confirmMutation.data && (
