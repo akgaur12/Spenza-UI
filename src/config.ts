@@ -1,6 +1,10 @@
 /** Parsed, typed environment variables — the only place `import.meta.env` should be read directly. */
 export const env = {
-  apiUrl: import.meta.env.VITE_API_URL,
+  // Trailing slash stripped so raw `fetch()` calls that manually join this with a leading-slash
+  // path (the SSE streaming request in use-chat-streaming.ts) never produce a `//` in the URL —
+  // axios-based calls are already safe since axios's own baseURL joining handles this, but a
+  // misconfigured deploy env var (a trailing slash on VITE_API_URL) broke the raw-fetch path.
+  apiUrl: import.meta.env.VITE_API_URL.replace(/\/+$/, ''),
   appName: import.meta.env.VITE_APP_NAME,
   appEnv: import.meta.env.VITE_APP_ENV,
   isDev: import.meta.env.DEV,
